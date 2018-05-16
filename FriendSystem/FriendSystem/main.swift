@@ -41,9 +41,12 @@ func SetName() {
 class ProfilePage: user {
   private var user: user
   private var imageUrl: String?
- // private var posts: Array Post
+    private var posts: Array<Post>;
   private var birthDay: Date?
-
+    
+    init(user: ) {
+        <#statements#>
+    }
 }
 
 class Post: ProfilePage {
