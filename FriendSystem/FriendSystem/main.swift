@@ -50,8 +50,27 @@ class ProfilePage {
         self.posts = posts
         self.birthDay = birthDay
     }
-    
-    
+    func SetImageUrl(url: String) -> Void {
+        
+    }
+    func GetImageUrl() -> String {
+        
+    }
+    func GetBirthDay() -> Date {
+        
+    }
+    func SetBirthDay(date: Date) -> Void {
+        
+    }
+    func MakePost(title: String, content: String, published: Date) -> Post {
+        
+    }
+    func DeletePost(post: Post) -> Bool {
+        
+    }
+    func ShowPosts(post: Array<Post>) -> Void {
+        
+    }
 }
 class Post {
     private var title: String
@@ -81,18 +100,30 @@ class Post {
     func  GetPos(title: String, content: String, published: Date, comments: Array<Comments>) -> String {
         
     }
-    func LikePost(user: User, type: LikeType) -> Like {
+    func LikePost(user: User, type: LikeType) -> Likes {
         
     }
     func SharePost(post: Post) -> Bool {
         
     }
+}
     class Likes {
         private var user: User
+        private var type: LikeType
+        
+        init(user: User, type: LikeType) {
+            self.type = type
+        }
+        
     }
     
+    enum LikeType {
+        case ThumbsUp
+        case ThumbsDown
+        case Evil
+        case Angel
+    }
     
-}
 class Comments {
     private var user: User
     private var post: Post
