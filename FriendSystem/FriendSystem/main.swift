@@ -56,20 +56,31 @@ class Post: ProfilePage {
     private var title: String
     private var content: String
     private var comments: Array<Comments>
-    private var Published: Date
+    private var published: Date
     
     init(title: String, content: String, comments: Array<Comments>, pubhlished: Date) {
         self.title = title
         self.content = content
         self.comments = comments
-        self.Published
+        self.published = published
     }
     
 }
 class Comments: Post {
+    private var user: User
+    private var post: Post
+    private var content: String
+    private var published: Date
+    private var editedDate: Date
     
-    
-    
+    init(user: User, post: Post, contnet: String, published: Date, editedDate: Date) {
+        self.user = User
+        self.post = post
+        self.content = content
+        self.published = published
+        Self.editedDate = editedDate
+        
+    }
     
 }
 
