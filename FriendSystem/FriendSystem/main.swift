@@ -14,8 +14,9 @@ class User {
     var email: String
     var phone: Int
     var age: Int
-    var friendList: Array<Any>
+    var friendList: [User] = [];
     var isUserVerified: Bool
+    var isOnline: Bool = false;
 
     
     init() {
@@ -26,6 +27,19 @@ class User {
         friendList = []
         isUserVerified = false
     }
+    
+    func ShowFriendList() -> [User]{
+        return friendList;
+    }
+    
+    func IsUserOnline() -> Bool{
+        return isOnline;
+    }
+    
+    func GetName() -> String{
+        return name;
+    }
+    
 
 }
 
@@ -38,182 +52,7 @@ func SetName() {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var userObj: User;
 
 
 
@@ -385,12 +224,10 @@ class PastChat {
 
 class ChatBox {
     private var user: User;
-    private var content: String;
     private var smiley: [Smiley] = [];
     
-    init (user: User, content: String){
+    init (user: User){
         self.user = user;
-        self.content = content;
         
     }
     
@@ -407,6 +244,7 @@ class ChatBox {
 
 
 class OnlineBox {
+    
     func DisplayOnlineBox(){
         var chatChoice = "";
         while(chatChoice != "Q"){
@@ -418,7 +256,7 @@ class OnlineBox {
                 chatChoice = userChoice;
                 
                 if chatChoice != "Q" {
-                    var friendList: [User] = User.ShowFriendList();
+                    var friendList: [User] = userObj.ShowFriendList();
                     
                     for user in friendList {
                         if(user.name.contains(chatChoice)){
@@ -449,14 +287,14 @@ class OnlineBox {
     }
     
     func ShowAvailable(){
-        var friendList: [User] = UserObj.ShowFriendList();
+        var friendList: [User] = userObj.ShowFriendList();
         for user in friendList {
-            print(user.isOnline ? "Online: " : "Offline: " + user.name);
+            print(userObj.IsUserOnline() ? "Online: " : "Offline: " + "\(userObj.GetName)");
         }
     }
     
     func StartChatWith(friend: User){
-        var tempChatBox = ChatBox(user: friend)
+        let tempChatBox = ChatBox(user: friend)
     }
 }
 
