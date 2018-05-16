@@ -8,7 +8,35 @@
 
 import Foundation
 
-print("Hello, World!")
+class user {
+    
+    var name: String
+    var email: String
+    var phone: Int
+    var age: Int
+    var friendList: Array<Any>
+    var isUserVerified: Bool
+
+    
+    init() {
+        name = ""
+        email = ""
+        phone = 0
+        age = 0
+        friendList = []
+        isUserVerified = false
+    }
+
+}
+
+func SetName() {
+    
+    if user.init().name == ""
+    {
+        print("Please enter your name: ")
+        user.init().name = readLine()!
+    }
+}
 
 
 class Smiley {
