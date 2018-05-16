@@ -195,17 +195,56 @@ class ChatBox {
 
 
 class OnlineBox {
-    private var friends: [User] = [];
-    
-    func ShowAvailable(){
-        var friendList: [User] = User.ShowFriendList();
-        for i in friendList {
-            print(i.isOnline ? "Online: " : "Offline: " + i.name);
+    func DisplayOnlineBox(){
+        var chatChoice = "";
+        while(chatChoice != "Q"){
+            print("""
+                Please choose a friend to write with by writing part of users name.
+                Or write Q and hit enter to quit.
+            """);
+            if let userChoice = readLine(){
+                chatChoice = userChoice;
+                
+                if chatChoice != "Q" {
+                    var friendList: [User] = User.ShowFriendList();
+                    
+                    for user in friendList {
+                        if(user.name.contains(chatChoice)){
+                            
+                            var userCorrectSelection = false;
+                            while !userCorrectSelection{
+                            
+                                print("Did you want to chat with \(user.name)? Y/N");
+                                if let selection = readLine()?.uppercased(){
+                                    switch selection {
+                                    case "Y":
+                                        StartChatWith(friend: user);
+                                        userCorrectSelection = true;
+                                        break;
+                                    case "N":
+                                        userCorrectSelection = true;
+                                        // Do nothing, let loop run
+                                    default:
+                                        print("Selection not recognized");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     
-    func StartChatWith(friend: User) {
-        
+    func ShowAvailable(){
+        var friendList: [User] = UserObj.ShowFriendList();
+        for user in friendList {
+            print(user.isOnline ? "Online: " : "Offline: " + user.name);
+        }
+    }
+    
+    func StartChatWith(friend: User){
+        var tempChatBox = ChatBox(user: friend)
     }
 }
 
