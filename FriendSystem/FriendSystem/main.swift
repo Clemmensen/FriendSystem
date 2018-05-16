@@ -8,7 +8,7 @@
 
 import Foundation
 
-class user {
+class User {
     
     var name: String
     var email: String
@@ -31,10 +31,10 @@ class user {
 
 func SetName() {
     
-    if user.init().name == ""
+    if User.init().name == ""
     {
         print("Please enter your name: ")
-        user.init().name = readLine()!
+        User.init().name = readLine()!
     }
 }
 
@@ -84,6 +84,7 @@ class Comments: Post {
     
 }
 
+/// Holds an enum that signals a smiley
 class Smiley {
     private var type: SmileyType;
     init(smiley: SmileyType){
@@ -91,44 +92,11 @@ class Smiley {
     }
 }
 
+/// The available types of smileys
 enum SmileyType {
     case SmileyFace, CoolSmiley, AngrySmiley, SleepySmiley, EvilSmiley, AngelSmiley;
 }
 
-
-class OnlineBox {
-    private var friends: [User] = [];
-    
-    func ShowAvailable(){
-        var friendList: [User] = User.ShowFriendList();
-    }
-    
-    func StartChatWith(friend: User) {
-        
-    }
-}
-
-
-class ChatBox {
-    private var user: User;
-    private var content: String;
-    private var smiley: [Smiley] = [];
-    
-    init (user: User, content: String){
-        self.user = user;
-        self.content = content;
-        
-    }
-    
-    func makeComment(content: String, smiley: Smiley){
-        
-    }
-    
-    func chatArchive(archive: PastChat){
-        
-    }
-    
-}
 
 
 
@@ -156,4 +124,57 @@ class PastChat {
         
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+class ChatBox {
+    private var user: User;
+    private var content: String;
+    private var smiley: [Smiley] = [];
+    
+    init (user: User, content: String){
+        self.user = user;
+        self.content = content;
+        
+    }
+    
+    func makeComment(content: String, smiley: Smiley){
+        
+    }
+    
+    func chatArchive(archive: PastChat){
+        
+    }
+    
+}
+
+
+
+class OnlineBox {
+    private var friends: [User] = [];
+    
+    func ShowAvailable(){
+        var friendList: [User] = User.ShowFriendList();
+        for i in friendList {
+            print(i.isOnline ? "Online: " : "Offline: " + i.name);
+        }
+    }
+    
+    func StartChatWith(friend: User) {
+        
+    }
+}
+
+
+
 
