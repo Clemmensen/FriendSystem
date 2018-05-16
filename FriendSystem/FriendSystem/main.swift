@@ -8,7 +8,7 @@
 
 import Foundation
 
-class user {
+class User {
     
     var name: String
     var email: String
@@ -31,10 +31,10 @@ class user {
 
 func SetName() {
     
-    if user.init().name == ""
+    if User.init().name == ""
     {
         print("Please enter your name: ")
-        user.init().name = readLine()!
+        User.init().name = readLine()!
     }
 }
 
@@ -50,15 +50,17 @@ class ProfilePage: User {
         self.posts = posts
         self.birthDay = birthDay
     }
+    
+    
 }
-
+// Start på profile
 class Post: ProfilePage {
     private var title: String
     private var content: String
     private var comments: Array<Comments>
     private var published: Date
     
-    init(title: String, content: String, comments: Array<Comments>, pubhlished: Date) {
+    init(title: String, content: String, comments: Array<Comments>, published: Date) {
         self.title = title
         self.content = content
         self.comments = comments
@@ -73,12 +75,11 @@ class Comments: Post {
     private var published: Date
     private var editedDate: Date
     
-    init(user: User, post: Post, contnet: String, published: Date, editedDate: Date) {
-        self.user = User
+    init(user: User, post: Post, content: String, published: Date, editedDate: Date) {
         self.post = post
         self.content = content
         self.published = published
-        Self.editedDate = editedDate
+        self.editedDate = editedDate
         
     }
     
