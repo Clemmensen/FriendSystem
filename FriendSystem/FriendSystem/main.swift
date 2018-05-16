@@ -38,7 +38,7 @@ func SetName() {
     }
 }
 
-class ProfilePage: User {
+class ProfilePage {
     private var user: User
     private var imageUrl: String?
     private var posts: Array<Post>
@@ -53,22 +53,47 @@ class ProfilePage: User {
     
     
 }
-// Start på profile
-class Post: ProfilePage {
+class Post {
     private var title: String
     private var content: String
     private var comments: Array<Comments>
     private var published: Date
+    private var like: Array<Likes>
+    private var sharedPost: Post?
+    
     
     init(title: String, content: String, comments: Array<Comments>, published: Date) {
         self.title = title
         self.content = content
         self.comments = comments
         self.published = published
+        
+    }
+    func EditPost(title: String, content: String) -> Bool {
+        
+    }
+    func DeleteComment(comment: Comments) -> Bool {
+        
+    }
+    func MakeComment(post: Post, user: User, content: String) -> Bool {
+        
+    }
+    func  GetPos(title: String, content: String, published: Date, comments: Array<Comments>) -> String {
+        
+    }
+    func LikePost(user: User, type: LikeType) -> Like {
+        
+    }
+    func SharePost(post: Post) -> Bool {
+        
+    }
+    class Likes {
+        private var user: User
     }
     
+    
 }
-class Comments: Post {
+class Comments {
     private var user: User
     private var post: Post
     private var content: String
@@ -82,7 +107,15 @@ class Comments: Post {
         self.editedDate = editedDate
         
     }
+    func EditComment(content: String) -> Void {
     
+    }
+    func CreatetCommont(user: User, post: Post, content: String) -> Bool {
+        
+    }
+    func Getcomment(user: User, post: Post, content: String) -> Void {
+        
+    }
 }
 
 /// Holds an enum that signals a smiley
