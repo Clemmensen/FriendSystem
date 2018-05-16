@@ -38,3 +38,18 @@ func SetName() {
     }
 }
 
+class ProfilePage: user {
+  private var user: user
+  private var imageUrl: String?
+ // private var posts: Array Post
+  private var birthDay: Date?
+
+}
+
+class Post: ProfilePage {
+    private var title: String
+    private var content: String
+    //private var comments: Array
+    private var Published: Date
+}
+
