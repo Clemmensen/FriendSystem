@@ -38,24 +38,40 @@ func SetName() {
     }
 }
 
-class ProfilePage: user {
-  private var user: user
-  private var imageUrl: String?
-    private var posts: Array<Post>;
-  private var birthDay: Date?
+class ProfilePage: User {
+    private var user: User
+    private var imageUrl: String?
+    private var posts: Array<Post>
+    private var birthDay: Date?
     
-    init(user: ) {
-        <#statements#>
+    init(user: User, imageUrl: String?, posts: Array<Post>, birthDay: Date) {
+        self.user = user
+        self.imageUrl = imageUrl
+        self.posts = posts
+        self.birthDay = birthDay
     }
 }
 
 class Post: ProfilePage {
     private var title: String
     private var content: String
-    //private var comments: Array
+    private var comments: Array<Comments>
     private var Published: Date
+    
+    init(title: String, content: String, comments: Array<Comments>, pubhlished: Date) {
+        self.title = title
+        self.content = content
+        self.comments = comments
+        self.Published
+    }
+    
 }
-
+class Comments: Post {
+    
+    
+    
+    
+}
 
 class Smiley {
     private var type: SmileyType;
