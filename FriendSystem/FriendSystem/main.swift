@@ -85,7 +85,7 @@ class User {
         if self.phone == 0
         {
             print("Please enter your phone number: ")
-            var tempInt = readLine()
+            let tempInt = readLine()
             let chosenPhone = Int(tempInt!)
             let optionalInt : Int? = chosenPhone
             if var optionalInt = chosenPhone {
@@ -100,7 +100,7 @@ class User {
         if self.age == 0
         {
             print("Please enter your age: ")
-            var tempInt = readLine()
+            let tempInt = readLine()
             let chosenPhone = Int(tempInt!)
             let optionalInt : Int? = chosenPhone
             if var optionalInt = chosenPhone {
@@ -147,9 +147,16 @@ class User {
 
 
 
-var userDatabase: [User] = [];
 
-var userObj: User = User();
+
+
+
+
+
+
+
+
+
 
 class Post {
     private var title: String
@@ -283,7 +290,7 @@ class ProfilePage {
         if let userInputTitle = readLine(){
             print("Please input content")
             if let userInputContent = readLine(){
-                var newPost = Post(title: userInputTitle, content: userInputContent);
+                let newPost = Post(title: userInputTitle, content: userInputContent);
                 posts.append(newPost);
             }
         }
@@ -335,7 +342,12 @@ class ProfilePage {
 }
 
 
-var profileDatabase: [ProfilePage] = [];
+
+
+
+
+
+
 
 
 
@@ -425,13 +437,17 @@ class PastChat {
     }
     
     func AddComment(content: String){
-        let newComment = CommentChat(user: userObj, content: content, published: Date());
+        let newComment = CommentChat(user: myApp.userObj, content: content, published: Date());
         self.comments.append(newComment);
     }
 }
 
-// An array of oldChats
-var oldChats: [PastChat] = [];
+
+
+
+
+
+
 
 
 
@@ -453,17 +469,17 @@ class ChatBox {
     }
     
     func chatArchive(friend: User) -> PastChat{
-        for chat in oldChats {
-            if chat.CheckUserInChat(person: userObj) && chat.CheckUserInChat(person: friend){
+        for chat in myApp.oldChats {
+            if chat.CheckUserInChat(person: myApp.userObj) && chat.CheckUserInChat(person: friend){
                 return chat;
             }
         }
         
         // Creates an empty old chat between User A and currentUser
         let newChat = PastChat();
-        newChat.AddUser(newUser: userObj);
+        newChat.AddUser(newUser: myApp.userObj);
         newChat.AddUser(newUser: friend);
-        oldChats.append(newChat);
+        myApp.oldChats.append(newChat);
         return newChat;
     }
     
@@ -484,7 +500,7 @@ class OnlineBox {
             Or write Q and hit enter to quit.\n
             """);
             
-            let friendList: [User] = userObj.ShowFriendList();
+            let friendList: [User] = myApp.userObj.ShowFriendList();
             self.ShowAvailable(friends: friendList);
             
             print("Part of users name: ", terminator: "");
@@ -561,190 +577,224 @@ class OnlineBox {
 
 
 
-func FindUser(email: String) -> User?{
-    for user in userDatabase{
-        if user.GetEmail() == email{
-            return user;
+
+
+
+
+
+
+class BasicFriendPopulation {
+
+    func FindUser(email: String) -> User?{
+        for user in myApp.userDatabase{
+            if user.GetEmail() == email{
+                return user;
+            }
         }
+        return nil;
     }
-    return nil;
+
+    func AddBasicFriends(){
+        /**
+         Chat is called by making a call to myOnlineBox.DisplayOnlineBox
+         While the OnlineBox is active the focus in regards to CLI is kept there
+         */
+        
+        
+        var friend1 = User();
+        var friend2 = User();
+        var friend3 = User();
+        var friend4 = User();
+        if !myApp.onlyAddBasicFriendsOnce{
+            friend1.SetName(name: "George");
+            friend1.SetEmail(email: "George@hotdata.dk");
+            friend1.SetPassword(password: "George");
+            friend1.SetOnline(online: true);
+        
+            friend2.SetName(name: "Per");
+            friend2.SetPassword(password: "Per");
+            friend2.SetEmail(email: "Per@hotdata.dk");
+            friend2.SetOnline(online: true);
+            
+            friend3.SetName(name: "Paul");
+            friend3.SetPassword(password: "Paul");
+            friend3.SetEmail(email: "Paul@hotdata.dk");
+            friend3.SetOnline(online: false);
+        
+            friend4.SetName(name: "Louise");
+            friend4.SetPassword(password: "Louise");
+            friend4.SetEmail(email: "Louise@hotdata.dk");
+            friend4.SetOnline(online: false);
+        }else{
+            friend1 = FindUser(email: "George@hotdata.dk")!;
+            friend2 = FindUser(email: "Per@hotdata.dk")!;
+            friend3 = FindUser(email: "Paul@hotdata.dk")!;
+            friend4 = FindUser(email: "Louise@hotdata.dk")!;
+        }
+        
+        /*
+        var friend2 = User()
+        friend2.name = "Paul";
+        
+        
+        var friend3 = User()
+        friend3.name = "Per";
+        */
+        myApp.userObj.AddToFriendList(user: friend1);
+        myApp.userObj.AddToFriendList(user: friend2);
+        myApp.userObj.AddToFriendList(user: friend3);
+        myApp.userObj.AddToFriendList(user: friend4);
+        
+        if !myApp.onlyAddBasicFriendsOnce{
+            
+            myApp.userDatabase.append(friend1);
+            myApp.userDatabase.append(friend2);
+            myApp.userDatabase.append(friend3);
+            myApp.userDatabase.append(friend4);
+            myApp.onlyAddBasicFriendsOnce = true;
+        }
+        
+        /*myApp.userObj.AddToFriendList(friend2);
+        myApp.userObj.AddToFriendList(friend3);
+        */
+
+    }
+    
 }
 
-func AddBasicFriends(){
-    /**
-     Chat is called by making a call to myOnlineBox.DisplayOnlineBox
-     While the OnlineBox is active the focus in regards to CLI is kept there
-     */
     
+
+
+class MainInitializer{
+    // An array of oldChats
+    var oldChats: [PastChat] = [];
     
-    var friend1 = User();
-    var friend2 = User();
-    var friend3 = User();
-    var friend4 = User();
-    if !onlyAddBasicFriendsOnce{
-        friend1.SetName(name: "George");
-        friend1.SetEmail(email: "George@hotdata.dk");
-        friend1.SetPassword(password: "George");
-        friend1.SetOnline(online: true);
+    var profileDatabase: [ProfilePage] = [];
     
-        friend2.SetName(name: "Per");
-        friend2.SetPassword(password: "Per");
-        friend2.SetEmail(email: "Per@hotdata.dk");
-        friend2.SetOnline(online: true);
+    var userDatabase: [User] = [];
+    
+    var userObj: User = User();
+
+    var onlyAddBasicFriendsOnce = false;
+
+    func MainInterface(){
+        var userProfilepage: ProfilePage = ProfilePage(user: userObj);
+        var hasPage = false;
+        for page in profileDatabase {
+            if page.ReturnUser() === userObj {
+                userProfilepage = page;
+                hasPage = true;
+            }
+        }
+        if !hasPage{
+            profileDatabase.append(userProfilepage);
+        }
         
-        friend3.SetName(name: "Paul");
-        friend3.SetPassword(password: "Paul");
-        friend3.SetEmail(email: "Paul@hotdata.dk");
-        friend3.SetOnline(online: false);
-    
-        friend4.SetName(name: "Louise");
-        friend4.SetPassword(password: "Louise");
-        friend4.SetEmail(email: "Louise@hotdata.dk");
-        friend4.SetOnline(online: false);
-    }else{
-        friend1 = FindUser(email: "George@hotdata.dk")!;
-        friend2 = FindUser(email: "Per@hotdata.dk")!;
-        friend3 = FindUser(email: "Paul@hotdata.dk")!;
-        friend4 = FindUser(email: "Louise@hotdata.dk")!;
-    }
-    
-    /*
-    var friend2 = User()
-    friend2.name = "Paul";
-    
-    
-    var friend3 = User()
-    friend3.name = "Per";
-    */
-    userObj.AddToFriendList(user: friend1);
-    userObj.AddToFriendList(user: friend2);
-    userObj.AddToFriendList(user: friend3);
-    userObj.AddToFriendList(user: friend4);
-    
-    if !onlyAddBasicFriendsOnce{
-        
-        userDatabase.append(friend1);
-        userDatabase.append(friend2);
-        userDatabase.append(friend3);
-        userDatabase.append(friend4);
-        onlyAddBasicFriendsOnce = true;
-    }
-    
-    /*userObj.AddToFriendList(friend2);
-    userObj.AddToFriendList(friend3);
-    */
-
-}
-var onlyAddBasicFriendsOnce = false;
-
-    
-
-
-
-func MainInterface(){
-    var userProfilepage: ProfilePage = ProfilePage(user: userObj);
-    var hasPage = false;
-    for page in profileDatabase {
-        if page.ReturnUser() === userObj {
-            userProfilepage = page;
-            hasPage = true;
+        var userChoice = "";
+        while userChoice != "Q" {
+            print("""
+                        \n\n\n\tQ - Quit
+                        1 - Show posts
+                        2 - Make post
+                        3 - Delete post
+                        4 - Show chatbox
+                    """);
+            
+            if let userInput = readLine() {
+                userChoice = userInput.uppercased();
+                switch userChoice {
+                case "Q":
+                    break;
+                case "1":
+                    userProfilepage.ShowPosts();
+                case "2":
+                    userProfilepage.MakePost();
+                case "3":
+                    userProfilepage.DeletePost();
+                case "4":
+                    let myOnlineBox = OnlineBox();
+                    myOnlineBox.DisplayOnlineBox()
+                default:
+                    print("Selection not recognized");
+                }
+            }
         }
     }
-    if !hasPage{
-        profileDatabase.append(userProfilepage);
-    }
-    
-    var userChoice = "";
-    while userChoice != "Q" {
-        print("""
+
+
+    func Main(){
+        
+        
+        
+        
+        
+        //Login
+
+        let isLoggedIn = false
+        
+        //var waitingUsername = false
+        //var waitingPassword = false
+
+        var isQuit = false;
+        while isQuit == false {
+            if isLoggedIn == false {
+                print("""
                     \n\n\n\tQ - Quit
-                    1 - Show posts
-                    2 - Make post
-                    3 - Delete post
-                    4 - Show chatbox
+                    1 - Log på
+                    2 - Opret konto
                 """);
         
-        if let userInput = readLine() {
-            userChoice = userInput.uppercased();
-            switch userChoice {
-            case "Q":
-                break;
-            case "1":
-                userProfilepage.ShowPosts();
-            case "2":
-                userProfilepage.MakePost();
-            case "3":
-                userProfilepage.DeletePost();
-            case "4":
-                let myOnlineBox = OnlineBox();
-                myOnlineBox.DisplayOnlineBox()
-            default:
-                print("Selection not recognized");
-            }
-        }
-    }
-}
+                var loginPage = "";
+                if let userChoice = readLine() {
+                    loginPage = userChoice.uppercased();
+                }
+                switch loginPage {
 
-
-
-//Login
-
-var isLoggedIn = false
-var waitingUsername = false
-var waitingPassword = false
-
-var isQuit = false;
-while isQuit == false {
-    if isLoggedIn == false {
-        print("""
-            \n\n\n\tQ - Quit
-            1 - Log på
-            2 - Opret konto
-        """);
-        
-        var loginPage = "";
-        if let userChoice = readLine() {
-            loginPage = userChoice.uppercased();
-        }
-        switch loginPage {
-
-            case "1":
-            print("Email: ", terminator: "");
-            if let userInput = readLine(){
-                for user in userDatabase{
-                    if user.GetEmail() == userInput {
-                        print("Password: ", terminator: "");
-                        if let userPass = readLine(){
-                            if let userObjTemp = user.VerifyPassword(password: userPass){
-                                userObj = userObjTemp;
-                                MainInterface();
+                    case "1":
+                    print("Email: ", terminator: "");
+                    if let userInput = readLine(){
+                        for user in userDatabase{
+                            if user.GetEmail() == userInput {
+                                print("Password: ", terminator: "");
+                                if let userPass = readLine(){
+                                    if let userObjTemp = user.VerifyPassword(password: userPass){
+                                        userObj = userObjTemp;
+                                        MainInterface();
+                                    }
+                                }
                             }
                         }
+        
                     }
+        
+                    case "2":
+                    print("Register an account!")
+                    userObj = User();
+                    userObj.SetName(name: "");
+                    userObj.SetAge();
+                    userObj.SetEmail(email: "");
+                    userObj.SetPhone();
+                    userObj.SetPassword(password: "");
+                    userDatabase.append(userObj);
+                    let myBasicFriends = BasicFriendPopulation();
+                    myBasicFriends.AddBasicFriends();
+                    MainInterface();
+        
+        
+                    case "Q":
+                    print("Quitting");
+                    isQuit = true;
+        
+                default:
+                    print("Selection not recognized");
                 }
-                
             }
-            
-            case "2":
-            print("Register an account!")
-            userObj = User();
-            userObj.SetName(name: "");
-            userObj.SetAge();
-            userObj.SetEmail(email: "");
-            userObj.SetPhone();
-            userObj.SetPassword(password: "");
-            userDatabase.append(userObj);
-            AddBasicFriends();
-            MainInterface();
-            
-            
-            case "Q":
-            print("Quitting");
-            isQuit = true;
-            
-        default:
-            print("Selection not recognized");
         }
     }
 }
+
+
+let myApp = MainInitializer();
+myApp.Main();
+
 
