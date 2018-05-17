@@ -232,7 +232,7 @@ class Comments {
   //  func EditComment(content: String) -> Void {}
     
     func CreatetComment(){
-  //      var viewPost: String = Post.MakeComment(<#T##Post#>);
+
     }
     func GetCommentPost() -> String{
         return "\(content) - \(published) - \(editedDate)";
@@ -267,15 +267,25 @@ class ProfilePage {
     /*func GetBirthDay() -> Date{
      return birthDay!;
      }*/
-    func SetBirthDay(date: Date) -> Void {
-        
-    }
+   // func SetBirthDay(date: Date) -> Void {}
+    
     func MakePost(title: String, content: String, published: Date){
         
         
     }
     func DeletePost(post: Post){
         
+        var user = userDatabase
+        var posts = Post;
+        var delete = " " ;
+        if posts >= delete {
+            
+            print("The post is gone");
+            return
+        } else {
+            print("The post did not disappar");
+            return
+        }
     }
     func ShowPosts() -> Void {
         print("Showing posts");
