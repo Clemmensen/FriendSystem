@@ -69,19 +69,20 @@ class ProfilePage {
     func SetImageUrl(url: String) -> Void {
         
     }
-    func GetImageUrl() -> String {
+    func GetImageUrl() {
         
     }
-    func GetBirthDay() -> Date {
+    func GetBirthDay(){
         
     }
     func SetBirthDay(date: Date) -> Void {
         
     }
-    func MakePost(title: String, content: String, published: Date) -> Post {
-        
+    func MakePost(title: String, content: String, published: Date){
+
+            
     }
-    func DeletePost(post: Post) -> Bool {
+    func DeletePost(post: Post){
         
     }
     func ShowPosts(post: Array<Post>) -> Void {
@@ -97,37 +98,40 @@ class Post {
     private var sharedPost: Post?
     
     
-    init(title: String, content: String, comments: Array<Comments>, published: Date) {
+    init(title: String, content: String, comments: Array<Comments>, published: Date, like: Array<Likes>, sharedPost: Post ) {
         self.title = title
         self.content = content
         self.comments = comments
         self.published = published
+        self.like = like
+        self.sharedPost = sharedPost
+    }
+    func EditPost(title: String, content: String){
         
     }
-    func EditPost(title: String, content: String) -> Bool {
+    func DeleteComment(comment: Comments) {
         
     }
-    func DeleteComment(comment: Comments) -> Bool {
+    func MakeComment(post: Post, user: User, content: String){
         
     }
-    func MakeComment(post: Post, user: User, content: String) -> Bool {
+    func  GetPos(title: String, content: String, published: Date, comments: Array<Comments>){
         
     }
-    func  GetPos(title: String, content: String, published: Date, comments: Array<Comments>) -> String {
+    func LikePost(user: User, type: LikeType){
         
     }
-    func LikePost(user: User, type: LikeType) -> Likes {
-        
-    }
-    func SharePost(post: Post) -> Bool {
+    func SharePost(post: Post){
         
     }
 }
+// Likes lavet med enum
     class Likes {
         private var user: User
         private var type: LikeType
         
         init(user: User, type: LikeType) {
+            self.user = user
             self.type = type
         }
         
@@ -148,6 +152,7 @@ class Comments {
     private var editedDate: Date
     
     init(user: User, post: Post, content: String, published: Date, editedDate: Date) {
+        self.user = user
         self.post = post
         self.content = content
         self.published = published
@@ -157,7 +162,7 @@ class Comments {
     func EditComment(content: String) -> Void {
     
     }
-    func CreatetCommont(user: User, post: Post, content: String) -> Bool {
+    func CreatetCommont(user: User, post: Post, content: String){
         
     }
     func Getcomment(user: User, post: Post, content: String) -> Void {
