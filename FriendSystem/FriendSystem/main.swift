@@ -554,12 +554,21 @@ func AddBasicFriends(){
     userObj.AddToFriendList(user: friend2);
     userObj.AddToFriendList(user: friend3);
     userObj.AddToFriendList(user: friend4);
+    
+    if !onlyAddBasicFriendsOnce{
+        
+        userDatabase.append(friend1);
+        userDatabase.append(friend2);
+        userDatabase.append(friend3);
+        userDatabase.append(friend4);
+    }
+    
     /*userObj.AddToFriendList(friend2);
     userObj.AddToFriendList(friend3);
     */
 
 }
-
+var onlyAddBasicFriendsOnce = false;
 
     
 
@@ -615,7 +624,7 @@ var isQuit = false;
 while isQuit == false {
     if isLoggedIn == false {
         print("""
-            \n\n\nQ - Quit
+            \n\n\n\tQ - Quit
             1 - Log på
             2 - Opret konto
         """);
