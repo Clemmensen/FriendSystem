@@ -2,18 +2,9 @@
 //  main.swift
 //  FriendSystem
 //
-//  Created by Maria Clemmensen on 16/05/2018.
-//  Copyright © 2018 Maria Clemmensen. All rights reserved.
-//
+// Created by Casper, Jakob and Maria
 
 import Foundation
-
-
-
-
-
-
-
 
 
 class User {
