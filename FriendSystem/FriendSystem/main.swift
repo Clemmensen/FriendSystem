@@ -191,13 +191,15 @@ enum LikeType {
 }
 
 class Comments {
-    private var user: [User] = []
-    private var post: [Post] = []
+    private var user: User
+    private var post: Post
     private var content: String
     private var published: Date
     private var editedDate: Date
     
     init(user: User, post: Post, content: String, published: Date, editedDate: Date) {
+        self.user = user
+        self.post = post
         self.content = content;
         self.published = published;
         self.editedDate = editedDate;
