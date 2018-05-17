@@ -294,20 +294,24 @@ class ProfilePage {
         }
         print("Please inout number that represents the post that should be deleted:")
         if let userChoice = readLine(){
-            if let IntUserChoice = Int(userChoice){
-                if IntUserChoice<posts.count{
-                    
+            if var IntUserChoice = Int(userChoice){
+                if IntUserChoice<posts.count && IntUserChoice >= 0{
+                    IntUserChoice -= 1
                     var userCorrectConfirm = false;
-                    print("You are about to delete:\(posts[IntUserChoice].GetTitle())\nWith the content of:\(posts[IntUserChoice].GetContent())\n\nAre you sure Y/N?: ", terminator: "");
-                    if let userConfirm = readLine(){
-                        switch userConfirm.uppercased(){
-                        case "Y":
-                        posts.remove(at: IntUserChoice);
-                        print("Post deleted");
-                        case "N":
-                            print("Deletion aborted");
-                        default:
-                            print("Selection not recognized");
+                    print("\nYou are about to delete:\n\(posts[IntUserChoice].GetTitle())\nWith the content of:\n\(posts[IntUserChoice].GetContent())\n\nAre you sure Y/N?: ", terminator: "");
+                    while !userCorrectConfirm{
+                        if let userConfirm = readLine(){
+                            switch userConfirm.uppercased(){
+                            case "Y":
+                            posts.remove(at: (IntUserChoice));
+                            userCorrectConfirm = true;
+                            print("Post deleted");
+                            case "N":
+                                userCorrectConfirm = true;
+                                print("Deletion aborted");
+                            default:
+                                print("Selection not recognized\nAre you sure Y/N?: ");
+                            }
                         }
                     }
                 }
