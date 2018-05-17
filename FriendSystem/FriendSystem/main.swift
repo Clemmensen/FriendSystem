@@ -39,6 +39,15 @@ class User {
     func GetName() -> String{
         return name;
     }
+    func GetAge() -> String{
+        return age;
+    }
+    func GetPgone() -> String{
+        return phone;
+    }
+    func GetEmail() -> String{
+        return email;
+    }
     
 
 }
@@ -51,6 +60,45 @@ func SetName() {
         User.init().name = readLine()!
     }
 }
+func SetEmail() {
+    
+    if User.init().email == ""
+    {
+        print("Please enter your name: ")
+        User.init().email = readLine()!
+    }
+}
+
+func SetPhone() {
+    
+    if User.init().phone == 0
+    {
+        print("Please enter your phone number: ")
+        var tempInt = readLine()
+        let chosenPhone = Int(tempInt!)
+        let optionalInt : Int? = chosenPhone
+        if var optionalInt = chosenPhone {
+            optionalInt = User.init().phone
+        }
+    }
+    
+}
+
+func SetAge() {
+    
+    if User.init().age == 0
+    {
+        print("Please enter your age: ")
+        var tempInt = readLine()
+        let chosenPhone = Int(tempInt!)
+        let optionalInt : Int? = chosenPhone
+        if var optionalInt = chosenPhone {
+            optionalInt = User.init().age
+        }
+    }
+}
+
+
 
 var userObj: User = User();
 
