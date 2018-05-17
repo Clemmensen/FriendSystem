@@ -9,39 +9,6 @@
 import Foundation
 
 
-//Login
-
-var isLoggedIn = false
-var waitingUsername = false
-var waitingPassword = false
-
-if isLoggedIn == false {
-   
-    switch loginPage {
-        
-    case "1":
-        print("email: ")
-        if readLine() == User.init().email {
-            print("Password: ")
-            else readLine() != User.init().email {
-                print("Please try again!")  {
-          
-            }
-        }
-            if readLine() == User.init().password {
-            print("Succes!")
-            isLoggedIn = true
-    }
-}
-        
-        
-    case "2":
-        print("Register an account!")
-        
-        
-    }
-}
- 
 
 
 
@@ -67,63 +34,63 @@ class User {
         friendList = []
         isUserVerified = false
         password = ""
+    }
+    func SetName() {
         
-        func SetName() {
-            
-            if User.init().name == ""
-            {
-                print("Please enter your name: ")
-                User.init().name = readLine()!
-            }
+        if User.init().name == ""
+        {
+            print("Please enter your name: ")
+            User.init().name = readLine()!
         }
-        func SetEmail() {
-            
-            if User.init().email == ""
-            {
-                print("Please enter your name: ")
-                User.init().email = readLine()!
-            }
-        }
+    }
+    func SetEmail() {
         
-        func SetPhone() {
-            
-            if User.init().phone == 0
-            {
-                print("Please enter your phone number: ")
-                var tempInt = readLine()
-                let chosenPhone = Int(tempInt!)
-                let optionalInt : Int? = chosenPhone
-                if var optionalInt = chosenPhone {
-                    optionalInt = User.init().phone
-                }
-            }
-            
+        if User.init().email == ""
+        {
+            print("Please enter your name: ")
+            User.init().email = readLine()!
         }
-        
-        func SetAge() {
-            
-            if User.init().age == 0
-            {
-                print("Please enter your age: ")
-                var tempInt = readLine()
-                let chosenPhone = Int(tempInt!)
-                let optionalInt : Int? = chosenPhone
-                if var optionalInt = chosenPhone {
-                    optionalInt = User.init().age
-                }
-            }
-        }
-
     }
     
+    func SetPhone() {
+        
+        if User.init().phone == 0
+        {
+            print("Please enter your phone number: ")
+            var tempInt = readLine()
+            let chosenPhone = Int(tempInt!)
+            let optionalInt : Int? = chosenPhone
+            if var optionalInt = chosenPhone {
+                optionalInt = User.init().phone
+            }
+        }
+        
+    }
+    
+    func SetAge() {
+        
+        if User.init().age == 0
+        {
+            print("Please enter your age: ")
+            var tempInt = readLine()
+            let chosenPhone = Int(tempInt!)
+            let optionalInt : Int? = chosenPhone
+            if var optionalInt = chosenPhone {
+                optionalInt = User.init().age
+            }
+        }
+    }
+
+
+
     func ShowFriendList() -> [User]{
         return friendList;
     }
-    
+
     func IsUserOnline() -> Bool{
         return isOnline;
     }
-    
+
     func GetName() -> String{
         return name;
     }
@@ -136,7 +103,7 @@ class User {
     func GetEmail() -> String{
         return email;
     }
-    
+}
 
 
 
@@ -474,6 +441,78 @@ class OnlineBox {
     }
 }
 
+    
+    
+
+//Login
+
+var isLoggedIn = false
+var waitingUsername = false
+var waitingPassword = false
+
+var isQuit = false;
+while isQuit == false {
+    if isLoggedIn == false {
+
+        
+        
+    print("""
+        Q - Quit
+        1 - Log på
+        2 - Opret konto
+    """);
+        
+        var loginPage = "";
+        if let userChoice = readLine() {
+            loginPage = userChoice.uppercased();
+        }
+        switch loginPage {
+
+            case "1":
+            print("email: ")
+            if readLine() == User.init().email {
+                print("Password: ")
+            } else if readLine() != User.init().email {
+                    print("Please try again!")
+            }
+            if readLine() == User.init().password {
+                print("Succes!")
+                isLoggedIn = true
+            }
+
+            case "2":
+            print("Register an account!")
+            
+            case "Q":
+            print("Quitting");
+            isQuit = true;
+            
+        default:
+            print("Selection not recognized");
+        }
+    }
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 /**
@@ -482,6 +521,7 @@ class OnlineBox {
 */
 var myOnlineBox = OnlineBox();
 
+    /*
 var friend1 = User()
 friend1.name = "George"
 friend1.isOnline = true;
@@ -507,5 +547,5 @@ myOnlineBox.DisplayOnlineBox()
 
 
 
-
+*/
 
