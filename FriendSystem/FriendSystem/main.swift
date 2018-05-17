@@ -405,12 +405,14 @@ class OnlineBox {
         var chatChoice = "";
         while(chatChoice != "Q"){
             print("""
-                Please choose a friend to write with by writing part of users name.
-                Or write Q and hit enter to quit.
+                \n\n\nPlease choose a friend to write with by writing part of users name.
+            Or write Q and hit enter to quit.\n
             """);
             
             let friendList: [User] = userObj.ShowFriendList();
             self.ShowAvailable(friends: friendList);
+            
+            print("Part of users name: ", terminator: "");
             
             if let userChoice = readLine()?.uppercased(){
                 chatChoice = userChoice;
@@ -428,9 +430,9 @@ class OnlineBox {
                                 /// This makes sure that a Y/N confirmation is made
                                 while !userCorrectSelection{
                                 
-                                    print("Did you want to chat with \(user.GetName())? Y/N");
-                                    if let selection = readLine()?.uppercased(){
-                                        switch selection {
+                                    print("Did you want to chat with \(user.GetName())? Y/N: ", terminator: "");
+                                    if let selection = readLine(){
+                                        switch selection.uppercased() {
                                         case "Y":
                                             StartChatWith(friend: user);
                                             userCorrectSelection = true;
@@ -541,7 +543,7 @@ var isQuit = false;
 while isQuit == false {
     if isLoggedIn == false {
         print("""
-            Q - Quit
+            \n\n\nQ - Quit
             1 - Log på
             2 - Opret konto
         """);
