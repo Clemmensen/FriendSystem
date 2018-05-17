@@ -100,7 +100,11 @@ func SetAge() {
 
 
 
+// Creates an object of user
 var userObj: User = User();
+
+
+
 
 class ProfilePage {
     private var user: [User] = []
@@ -225,6 +229,8 @@ class Comments {
 
 
 
+
+/*
 /// Holds an enum that signals a smiley
 class Smiley {
     private var type: SmileyType;
@@ -236,11 +242,13 @@ class Smiley {
 /// The available types of smileys
 enum SmileyType {
     case SmileyFace, CoolSmiley, AngrySmiley, SleepySmiley, EvilSmiley, AngelSmiley;
-}
+}*/
 
 
 
 
+
+/// A single entry / comment in the chat between users
 class CommentChat {
     private let user: User;
     private let content: String;
@@ -251,37 +259,94 @@ class CommentChat {
         self.published = published;
     }
     
-    func GetComment(user: User, post: Post, content: String){
-        
+    func GetComment() -> String{
+        return "\(published) - \(content)"
     }
 }
 
 
+
+
+
+/// A pervious chat between users
 class PastChat {
     private var comments: [CommentChat] = [];
     private var users: [User] = [];
     
     func ShowComments(){
+        for comment in comments {
+            print(comment.GetComment());
+        }
+    }
+    
+    func CheckUserInChat(person: User) -> Bool{
+        for user in self.users {
+            if user === person {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    func AddUser(newUser: User){
+        // Check if user is already in list
+        var isUserInList = false;
+        for user in self.users {
+            if user === newUser {
+                isUserInList = true;
+            }
+        }
         
+        // Reacts according to whether user exists in the list
+        if isUserInList{
+            print("An error has occured, the user is already a member of the chat");
+        } else {
+            self.users.append(newUser);
+        }
+        
+    }
+    
+    func AddComment(content: String){
+        let newComment = CommentChat(user: userObj, content: content, published: Date());
+        self.comments.append(newComment);
     }
 }
 
+// An array of oldChats
+var oldChats: [PastChat] = [];
 
+
+
+
+
+
+/// A box for chatting with one or more users
 class ChatBox {
     private var user: User;
-    private var smiley: [Smiley] = [];
+    //private var smiley: [Smiley] = [];
     
     init (user: User){
         self.user = user;
-        
     }
     
-    func makeComment(content: String, smiley: Smiley){
-        
+    //func makeComment(content: String, smiley: Smiley?){
+    func makeComment(content: String, currentChat: PastChat){
+        currentChat.AddComment(content: content)
     }
     
-    func chatArchive(archive: PastChat){
+    func chatArchive(friend: User) -> PastChat{
+        for chat in oldChats {
+            if chat.CheckUserInChat(person: userObj) && chat.CheckUserInChat(person: friend){
+                return chat;
+            }
+        }
         
+        // Creates an empty old chat between User A and currentUser
+        let newChat = PastChat();
+        newChat.AddUser(newUser: userObj);
+        newChat.AddUser(newUser: friend);
+        oldChats.append(newChat);
+        return newChat;
     }
     
 }
@@ -309,6 +374,7 @@ class OnlineBox {
                 
                 if chatChoice != "Q" {
                     
+                    /// Shows all friends that matches the query and asks if user meant that person
                     for user in friendList {
                         if(user.name.contains(chatChoice)){
                             
@@ -345,7 +411,23 @@ class OnlineBox {
     }
     
     func StartChatWith(friend: User){
-        // let tempChatBox = ChatBox(user: friend)
+        let newChatBox = ChatBox(user: friend);
+        let chat = newChatBox.chatArchive(friend: friend);
+        var chatChoice = "";
+        while chatChoice != "Q" {
+            
+            chat.ShowComments();
+            print("""
+                Q and enter to quit the chat with \(friend.name)
+                Or write a message and press enter to send.
+            """);
+            if let userInput = readLine()?.uppercased() {
+                chatChoice = userInput;
+                if chatChoice != "Q" {
+                    newChatBox.makeComment(content: userInput, currentChat: chat);
+                }
+            }
+        }
     }
 }
 
