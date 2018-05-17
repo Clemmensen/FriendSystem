@@ -489,6 +489,9 @@ func ShowChatInterface(){
     friend3.name = "Per";
     */
     userObj.AddToFriendList(user: friend1);
+    userObj.AddToFriendList(user: friend2);
+    userObj.AddToFriendList(user: friend3);
+    userObj.AddToFriendList(user: friend4);
     /*userObj.AddToFriendList(friend2);
     userObj.AddToFriendList(friend3);
     */
