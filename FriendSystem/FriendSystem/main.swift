@@ -12,6 +12,10 @@ import Foundation
 
 
 
+
+
+
+
 class User {
     
     private var name: String
@@ -112,8 +116,6 @@ class User {
     func SetOnline(online: Bool){
         self.isOnline = online;
     }
-    
-    
 }
 
 
@@ -124,50 +126,6 @@ var userDatabase: [User] = [];
 
 var userObj: User = User();
 
-
-
-
-class ProfilePage {
-    private var user: [User] = []
-  //  private var imageUrl: String?
-    private var posts: Array<Post>
-    private var birthDay: Date?
-    
-    init(user: [User], /*imageUrl: String?*/ posts: Array<Post>, birthDay: Date) {
-        //self.imageUrl = imageUrl
-        self.posts = posts
-        self.birthDay = birthDay
-    }
-   /* func SetImageUrl(url: String) -> Void {
-        if ProfilePage.init(user: User, imageUrl: String?, posts: Array<Post>, birthDay: Date()).imageUrl = String {
-            var temp = readLine()
-            let choseImage = String(temp!)
-            let optionalPicture: String? = choseImage
-            if var optionalPicture = choseImage {
-                optionalPicture = ProfilePage.init().imageUrl
-            }
-        }
-    }*/
- //   func GetImageUrl() -> String {
- //       return imageUrl
- //   }
-    func GetBirthDay() -> Date{
-        return birthDay!;
-    }
-    func SetBirthDay(date: Date) -> Void {
-        
-    }
-    func MakePost(title: String, content: String, published: Date){
-        
-            
-    }
-    func DeletePost(post: Post){
-        
-    }
-    func ShowPosts(post: Array<Post>) -> Void {
-        
-    }
-}
 class Post {
     private var title: String
     private var content: String
@@ -204,24 +162,26 @@ class Post {
         
     }
 }
+
+
 // Likes lavet med enum
-    class Likes {
-        private var user: [User] = []
-        private var type: LikeType
-        
-        init(user: User, type: LikeType) {
-            self.type = type
-        }
-        
+class Likes {
+    private var user: [User] = []
+    private var type: LikeType
+    
+    init(user: User, type: LikeType) {
+        self.type = type
     }
     
-    enum LikeType {
-        case ThumbsUp
-        case ThumbsDown
-        case Evil
-        case Angel
-    }
-    
+}
+
+enum LikeType {
+    case ThumbsUp
+    case ThumbsDown
+    case Evil
+    case Angel
+}
+
 class Comments {
     private var user: [User] = []
     private var post: [Post] = []
@@ -236,7 +196,7 @@ class Comments {
         
     }
     func EditComment(content: String) -> Void {
-    
+        
     }
     func CreatetCommont(user: User, post: Post, content: String){
         
@@ -245,6 +205,62 @@ class Comments {
         
     }
 }
+
+
+class ProfilePage {
+    //  private var imageUrl: String?
+    private var posts: Array<Post> = []
+    private var user: User;
+    //private var birthDay: Date?
+    
+    init(/*imageUrl: String?*/user: User) {
+        self.user = user;
+        //self.imageUrl = imageUrl
+        //self.posts = posts
+        //self.birthDay = birthDay
+    }
+    /* func SetImageUrl(url: String) -> Void {
+     if ProfilePage.init(user: User, imageUrl: String?, posts: Array<Post>, birthDay: Date()).imageUrl = String {
+     var temp = readLine()
+     let choseImage = String(temp!)
+     let optionalPicture: String? = choseImage
+     if var optionalPicture = choseImage {
+     optionalPicture = ProfilePage.init().imageUrl
+     }
+     }
+     }*/
+    //   func GetImageUrl() -> String {
+    //       return imageUrl
+    //   }
+    /*func GetBirthDay() -> Date{
+     return birthDay!;
+     }*/
+    func SetBirthDay(date: Date) -> Void {
+        
+    }
+    func MakePost(title: String, content: String, published: Date){
+        
+        
+    }
+    func DeletePost(post: Post){
+        
+    }
+    func ShowPosts() -> Void {
+        print("Showing posts");
+    }
+    func ReturnUser() -> User {
+        return user;
+    }
+}
+
+
+var profileDatabase: [ProfilePage] = [];
+
+
+
+
+    
+
 
 
 
@@ -395,26 +411,31 @@ class OnlineBox {
                 
                 if chatChoice != "Q" {
                     
+                    var isBreakOut = false;
                     /// Shows all friends that matches the query and asks if user meant that person
-                    var userCorrectSelection = false;
                     for user in friendList {
-                        if(user.GetName().uppercased().contains(chatChoice)){
-                            
-                            /// This makes sure that a Y/N confirmation is made
-                            while !userCorrectSelection{
-                            
-                                print("Did you want to chat with \(user.GetName())? Y/N");
-                                if let selection = readLine()?.uppercased(){
-                                    switch selection {
-                                    case "Y":
-                                        StartChatWith(friend: user);
-                                        userCorrectSelection = true;
-                                        break;
-                                    case "N":
-                                        userCorrectSelection = true;
-                                        // Do nothing, let loop run
-                                    default:
-                                        print("Selection not recognized");
+                        
+                        var userCorrectSelection = false;
+                        if !isBreakOut {
+                            if(user.GetName().uppercased().contains(chatChoice)){
+                                
+                                /// This makes sure that a Y/N confirmation is made
+                                while !userCorrectSelection{
+                                
+                                    print("Did you want to chat with \(user.GetName())? Y/N");
+                                    if let selection = readLine()?.uppercased(){
+                                        switch selection {
+                                        case "Y":
+                                            StartChatWith(friend: user);
+                                            userCorrectSelection = true;
+                                            isBreakOut = true;
+                                            break;
+                                        case "N":
+                                            userCorrectSelection = true;
+                                            // Do nothing, let loop run
+                                        default:
+                                            print("Selection not recognized");
+                                        }
                                     }
                                 }
                             }
@@ -443,10 +464,12 @@ class OnlineBox {
                 Q and enter to quit the chat with \(friend.GetName())
                 Or write a message and press enter to send.
             """);
-            if let userInput = readLine()?.uppercased() {
+            if let userInput = readLine() {
                 chatChoice = userInput;
-                if chatChoice != "Q" {
+                if chatChoice.uppercased() != "Q" {
                     newChatBox.makeComment(content: userInput, currentChat: chat);
+                } else {
+                    chatChoice = "Q";
                 }
             }
         }
@@ -511,14 +534,11 @@ var waitingPassword = false
 var isQuit = false;
 while isQuit == false {
     if isLoggedIn == false {
-
-        
-        
-    print("""
-        Q - Quit
-        1 - Log på
-        2 - Opret konto
-    """);
+        print("""
+            Q - Quit
+            1 - Log på
+            2 - Opret konto
+        """);
         
         var loginPage = "";
         if let userChoice = readLine() {
@@ -546,7 +566,42 @@ while isQuit == false {
             userObj.SetEmail();
             userObj.SetPhone();
             userDatabase.append(userObj);
-            ShowChatInterface();
+            
+            print("You are now logged in");
+            var userProfilepage: ProfilePage = ProfilePage(user: userObj);
+            var hasPage = false;
+            for page in profileDatabase {
+                if page.ReturnUser() === userObj {
+                    userProfilepage = page;
+                    hasPage = true;
+                }
+            }
+            if !hasPage{
+                profileDatabase.append(userProfilepage);
+            }
+            
+            var userChoice = "";
+            while userChoice != "Q" {
+                print("""
+                    \n\n\n\tQ - Quit
+                    1 - Vis posts
+                    2 - Vis chatbox
+                """);
+                
+                if let userInput = readLine() {
+                    userChoice = userInput.uppercased();
+                    switch userChoice {
+                    case "Q":
+                        break;
+                    case "1":
+                        userProfilepage.ShowPosts();
+                    case "2":
+                        ShowChatInterface();
+                    default:
+                        print("Selection not recognized");
+                    }
+                }
+            }
             
             case "Q":
             print("Quitting");
@@ -557,31 +612,4 @@ while isQuit == false {
         }
     }
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
 
