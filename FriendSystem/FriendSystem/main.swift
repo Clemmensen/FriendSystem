@@ -227,7 +227,7 @@ class Comments {
 
 
 
-
+/*
 /// Holds an enum that signals a smiley
 class Smiley {
     private var type: SmileyType;
@@ -239,7 +239,7 @@ class Smiley {
 /// The available types of smileys
 enum SmileyType {
     case SmileyFace, CoolSmiley, AngrySmiley, SleepySmiley, EvilSmiley, AngelSmiley;
-}
+}*/
 
 
 
@@ -256,8 +256,8 @@ class CommentChat {
         self.published = published;
     }
     
-    func GetComment(user: User, post: Post, content: String){
-        
+    func GetComment() -> String{
+        return "\(published) - \(content)"
     }
 }
 
@@ -271,7 +271,9 @@ class PastChat {
     private var users: [User] = [];
     
     func ShowComments(){
-        
+        for comment in comments {
+            print(comment.GetComment());
+        }
     }
     
     func CheckUserInChat(person: User) -> Bool{
@@ -300,6 +302,11 @@ class PastChat {
         }
         
     }
+    
+    func AddComment(content: String){
+        let newComment = CommentChat(user: userObj, content: content, published: Date());
+        self.comments.append(newComment);
+    }
 }
 
 // An array of oldChats
@@ -313,14 +320,15 @@ var oldChats: [PastChat] = [];
 /// A box for chatting with one or more users
 class ChatBox {
     private var user: User;
-    private var smiley: [Smiley] = [];
+    //private var smiley: [Smiley] = [];
     
     init (user: User){
         self.user = user;
     }
     
-    func makeComment(content: String, smiley: Smiley?){
-        
+    //func makeComment(content: String, smiley: Smiley?){
+    func makeComment(content: String, currentChat: PastChat){
+        currentChat.AddComment(content: content)
     }
     
     func chatArchive(friend: User) -> PastChat{
@@ -404,12 +412,17 @@ class OnlineBox {
         let chat = newChatBox.chatArchive(friend: friend);
         var chatChoice = "";
         while chatChoice != "Q" {
+            
+            chat.ShowComments();
             print("""
                 Q and enter to quit the chat with \(friend.name)
                 Or write a message and press enter to send.
             """);
-            if let userInput = readLine() {
+            if let userInput = readLine()?.uppercased() {
                 chatChoice = userInput;
+                if chatChoice != "Q" {
+                    newChatBox.makeComment(content: userInput, currentChat: chat);
+                }
             }
         }
     }
