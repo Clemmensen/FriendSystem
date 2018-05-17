@@ -131,17 +131,17 @@ class Post {
     private var content: String
     private var comments: Array<Comments>
     private var published: Date
-    private var like: Array<Likes>
-    private var sharedPost: Post?
+    //private var like: Array<Likes>
+    //private var sharedPost: Post?
     
     
-    init(title: String, content: String, comments: Array<Comments>, published: Date, like: Array<Likes>, sharedPost: Post ) {
+    init(title: String, content: String, comments: Array<Comments>, published: Date /*like: Array<Likes>, sharedPost: Post*/ ) {
         self.title = title
         self.content = content
         self.comments = comments
         self.published = published
-        self.like = like
-        self.sharedPost = sharedPost
+       // self.like = like
+       // self.sharedPost = sharedPost
     }
     func EditPost(title: String, content: String){
         
@@ -152,15 +152,23 @@ class Post {
     func MakeComment(post: Post, user: User, content: String){
         
     }
-    func  GetPos(title: String, content: String, published: Date, comments: Array<Comments>){
-        
+    func  GetPost(title: String, content: String, published: Date, comments: Array<Comments>){
+       
+        func GetTitle() -> String {
+            return title;
+        }
+        func GetContent() -> String {
+            return content;
+        }
+        func GetPublished() -> Date {
+            return published;
+        }
+        func GetComments() -> Array<Comments>{
+            return comments;
+        }
     }
-    func LikePost(user: User, type: LikeType){
-        
-    }
-    func SharePost(post: Post){
-        
-    }
+    //func LikePost(user: User, type: LikeType){}
+    //func SharePost(post: Post){}
 }
 
 
@@ -190,21 +198,19 @@ class Comments {
     private var editedDate: Date
     
     init(user: User, post: Post, content: String, published: Date, editedDate: Date) {
-        self.content = content
-        self.published = published
-        self.editedDate = editedDate
+        self.content = content;
+        self.published = published;
+        self.editedDate = editedDate;
         
     }
-    func EditComment(content: String) -> Void {
-        
+  //  func EditComment(content: String) -> Void {}
+    
+    func CreatetComment(){
+  //      var viewPost: String = Post.MakeComment(<#T##Post#>);
     }
-    func CreatetCommont(user: User, post: Post, content: String){
-        
+    func GetCommentPost() -> String{
+        return "\(content) - \(published) - \(editedDate)";
     }
-    func Getcomment(user: User, post: Post, content: String) -> Void {
-        
-    }
-}
 
 
 class ProfilePage {
