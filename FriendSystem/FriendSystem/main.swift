@@ -52,7 +52,7 @@ func SetName() {
     }
 }
 
-var userObj: User;
+var userObj: User = User();
 
 
 
@@ -169,6 +169,10 @@ class Comments {
     }
 }
 
+
+
+
+
 /// Holds an enum that signals a smiley
 class Smiley {
     private var type: SmileyType;
@@ -211,17 +215,6 @@ class PastChat {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 class ChatBox {
     private var user: User;
     private var smiley: [Smiley] = [];
@@ -243,24 +236,31 @@ class ChatBox {
 
 
 
+/// Chat entry point, Chat is called by making a call to myOnlineBox
 class OnlineBox {
     
     func DisplayOnlineBox(){
+        
+        /// Helps keep the chat running (onlineBox open)
         var chatChoice = "";
         while(chatChoice != "Q"){
             print("""
                 Please choose a friend to write with by writing part of users name.
                 Or write Q and hit enter to quit.
             """);
+            
+            let friendList: [User] = userObj.ShowFriendList();
+            self.ShowAvailable(friends: friendList);
+            
             if let userChoice = readLine(){
                 chatChoice = userChoice;
                 
                 if chatChoice != "Q" {
-                    var friendList: [User] = userObj.ShowFriendList();
                     
                     for user in friendList {
                         if(user.name.contains(chatChoice)){
                             
+                            /// This makes sure that a Y/N confirmation is made
                             var userCorrectSelection = false;
                             while !userCorrectSelection{
                             
@@ -286,18 +286,25 @@ class OnlineBox {
         }
     }
     
-    func ShowAvailable(){
-        var friendList: [User] = userObj.ShowFriendList();
-        for user in friendList {
-            print(userObj.IsUserOnline() ? "Online: " : "Offline: " + "\(userObj.GetName)");
+    func ShowAvailable(friends: [User]){
+        for user in friends {
+            print(user.IsUserOnline() ? "Online: " : "Offline: " + "\(user.GetName)");
         }
     }
     
     func StartChatWith(friend: User){
-        let tempChatBox = ChatBox(user: friend)
+        // let tempChatBox = ChatBox(user: friend)
     }
 }
 
+
+
+/**
+ Chat is called by making a call to myOnlineBox.DisplayOnlineBox
+ While the OnlineBox is active the focus in regards to CLI is kept there
+*/
+var myOnlineBox = OnlineBox();
+//myOnlineBox.DisplayOnlineBox();
 
 
 
