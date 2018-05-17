@@ -174,7 +174,7 @@ class Post {
         
     }
     func MakeComment(post: Post, user: User, content: String){
-        
+    
     }
     func  GetPost(title: String, content: String, published: Date, comments: Array<Comments>){
        
@@ -274,17 +274,10 @@ class ProfilePage {
         
     }
     func DeletePost(post: Post){
-        
-        var user = userDatabase
-        var posts = Post;
-        var delete = " " ;
-        if posts >= delete {
-            
-            print("The post is gone");
-            return
-        } else {
-            print("The post did not disappar");
-            return
+        for i in 0..<posts.count {
+            if posts[i] === post {
+                posts.remove(at: i);
+            }
         }
     }
     func ShowPosts() -> Void {
