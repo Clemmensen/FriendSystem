@@ -103,31 +103,37 @@ func SetAge() {
 var userObj: User = User();
 
 class ProfilePage {
-    private var user: User
-    private var imageUrl: String?
+    private var user: [User] = []
+  //  private var imageUrl: String?
     private var posts: Array<Post>
     private var birthDay: Date?
     
-    init(user: User, imageUrl: String?, posts: Array<Post>, birthDay: Date) {
-        self.user = user
-        self.imageUrl = imageUrl
+    init(user: [User], /*imageUrl: String?*/ posts: Array<Post>, birthDay: Date) {
+        //self.imageUrl = imageUrl
         self.posts = posts
         self.birthDay = birthDay
     }
-    func SetImageUrl(url: String) -> Void {
-        
-    }
-    func GetImageUrl() {
-        
-    }
-    func GetBirthDay(){
-        
+   /* func SetImageUrl(url: String) -> Void {
+        if ProfilePage.init(user: User, imageUrl: String?, posts: Array<Post>, birthDay: Date()).imageUrl = String {
+            var temp = readLine()
+            let choseImage = String(temp!)
+            let optionalPicture: String? = choseImage
+            if var optionalPicture = choseImage {
+                optionalPicture = ProfilePage.init().imageUrl
+            }
+        }
+    }*/
+ //   func GetImageUrl() -> String {
+ //       return imageUrl
+ //   }
+    func GetBirthDay() -> Date{
+        return birthDay!;
     }
     func SetBirthDay(date: Date) -> Void {
         
     }
     func MakePost(title: String, content: String, published: Date){
-
+        
             
     }
     func DeletePost(post: Post){
@@ -175,11 +181,10 @@ class Post {
 }
 // Likes lavet med enum
     class Likes {
-        private var user: User
+        private var user: [User] = []
         private var type: LikeType
         
         init(user: User, type: LikeType) {
-            self.user = user
             self.type = type
         }
         
@@ -193,15 +198,13 @@ class Post {
     }
     
 class Comments {
-    private var user: User
-    private var post: Post
+    private var user: [User] = []
+    private var post: [Post] = []
     private var content: String
     private var published: Date
     private var editedDate: Date
     
     init(user: User, post: Post, content: String, published: Date, editedDate: Date) {
-        self.user = user
-        self.post = post
         self.content = content
         self.published = published
         self.editedDate = editedDate
