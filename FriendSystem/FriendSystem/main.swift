@@ -47,12 +47,36 @@ class User {
             self.name = name;
         }
     }
-    func SetEmail() {
+    
+    func SetPassword(password: String) {
         
-        if self.email == ""
+        if password == ""
+        {
+            print("Please enter your password: ")
+            self.password = readLine()!
+        } else {
+            self.password = name;
+        }
+    }
+    
+    func VerifyPassword(password: String) -> User? {
+        
+        if self.password == password
+        {
+            return self
+        }else{
+            print("Password wrong");
+            return nil;
+        }
+    }
+    
+    func SetEmail(email: String) {
+        if email == ""
         {
             print("Please enter your email: ")
-            User.init().email = readLine()!
+            self.email = readLine()!
+        } else {
+            self.email = email;
         }
     }
     
@@ -488,27 +512,34 @@ class OnlineBox {
 
 
 
-func ShowChatInterface(){
+func AddBasicFriends(){
     /**
      Chat is called by making a call to myOnlineBox.DisplayOnlineBox
      While the OnlineBox is active the focus in regards to CLI is kept there
      */
-    var myOnlineBox = OnlineBox();
     
     var friend1 = User();
     friend1.SetName(name: "George");
+    friend1.SetEmail(email: "George@hotdata.dk");
+    friend1.SetPassword(password: "George");
     friend1.SetOnline(online: true);
     
     var friend2 = User();
     friend2.SetName(name: "Per");
+    friend2.SetPassword(password: "Per");
+    friend2.SetEmail(email: "Per@hotdata.dk");
     friend2.SetOnline(online: true);
     
     var friend3 = User();
     friend3.SetName(name: "Paul");
+    friend3.SetPassword(password: "Paul");
+    friend3.SetEmail(email: "Paul@hotdata.dk");
     friend3.SetOnline(online: false);
     
     var friend4 = User();
     friend4.SetName(name: "Louise");
+    friend4.SetPassword(password: "Louise");
+    friend4.SetEmail(email: "Louise@hotdata.dk");
     friend4.SetOnline(online: false);
     
     /*
@@ -526,12 +557,53 @@ func ShowChatInterface(){
     /*userObj.AddToFriendList(friend2);
     userObj.AddToFriendList(friend3);
     */
-    myOnlineBox.DisplayOnlineBox()
 
 }
 
 
     
+
+
+
+func MainInterface(){
+    var userProfilepage: ProfilePage = ProfilePage(user: userObj);
+    var hasPage = false;
+    for page in profileDatabase {
+        if page.ReturnUser() === userObj {
+            userProfilepage = page;
+            hasPage = true;
+        }
+    }
+    if !hasPage{
+        profileDatabase.append(userProfilepage);
+    }
+    
+    var userChoice = "";
+    while userChoice != "Q" {
+        print("""
+                    \n\n\n\tQ - Quit
+                    1 - Vis posts
+                    2 - Vis chatbox
+                """);
+        
+        if let userInput = readLine() {
+            userChoice = userInput.uppercased();
+            switch userChoice {
+            case "Q":
+                break;
+            case "1":
+                userProfilepage.ShowPosts();
+            case "2":
+                let myOnlineBox = OnlineBox();
+                myOnlineBox.DisplayOnlineBox()
+            default:
+                print("Selection not recognized");
+            }
+        }
+    }
+}
+
+
 
 //Login
 
@@ -555,61 +627,34 @@ while isQuit == false {
         switch loginPage {
 
             case "1":
-                print("email: ", terminator: "");
-            /*if readLine() == .email {
-                print("Password: ")
-            } else if readLine() != User.init().email {
-                    print("Please try again!")
+            print("Email: ", terminator: "");
+            if let userInput = readLine(){
+                for user in userDatabase{
+                    if user.GetEmail() == userInput {
+                        print("Password: ", terminator: "");
+                        if let userPass = readLine(){
+                            if let userObjTemp = user.VerifyPassword(password: userPass){
+                                userObj = userObjTemp;
+                                MainInterface();
+                            }
+                        }
+                    }
+                }
+                
             }
-            if readLine() == User.init().password {
-                print("Succes!")
-                isLoggedIn = true
-            }*/
-
+            
             case "2":
             print("Register an account!")
             userObj = User();
             userObj.SetName(name: "");
             userObj.SetAge();
-            userObj.SetEmail();
+            userObj.SetEmail(email: "");
             userObj.SetPhone();
+            userObj.SetPassword(password: "");
             userDatabase.append(userObj);
+            AddBasicFriends();
+            MainInterface();
             
-            print("You are now logged in");
-            var userProfilepage: ProfilePage = ProfilePage(user: userObj);
-            var hasPage = false;
-            for page in profileDatabase {
-                if page.ReturnUser() === userObj {
-                    userProfilepage = page;
-                    hasPage = true;
-                }
-            }
-            if !hasPage{
-                profileDatabase.append(userProfilepage);
-            }
-            
-            var userChoice = "";
-            while userChoice != "Q" {
-                print("""
-                    \n\n\n\tQ - Quit
-                    1 - Vis posts
-                    2 - Vis chatbox
-                """);
-                
-                if let userInput = readLine() {
-                    userChoice = userInput.uppercased();
-                    switch userChoice {
-                    case "Q":
-                        break;
-                    case "1":
-                        userProfilepage.ShowPosts();
-                    case "2":
-                        ShowChatInterface();
-                    default:
-                        print("Selection not recognized");
-                    }
-                }
-            }
             
             case "Q":
             print("Quitting");
