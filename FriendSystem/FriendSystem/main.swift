@@ -510,7 +510,14 @@ class OnlineBox {
 
 
 
-
+func FindUser(email: String) -> User?{
+    for user in userDatabase{
+        if user.GetEmail() == email{
+            return user;
+        }
+    }
+    return nil;
+}
 
 func AddBasicFriends(){
     /**
@@ -518,29 +525,37 @@ func AddBasicFriends(){
      While the OnlineBox is active the focus in regards to CLI is kept there
      */
     
+    
     var friend1 = User();
-    friend1.SetName(name: "George");
-    friend1.SetEmail(email: "George@hotdata.dk");
-    friend1.SetPassword(password: "George");
-    friend1.SetOnline(online: true);
-    
     var friend2 = User();
-    friend2.SetName(name: "Per");
-    friend2.SetPassword(password: "Per");
-    friend2.SetEmail(email: "Per@hotdata.dk");
-    friend2.SetOnline(online: true);
-    
     var friend3 = User();
-    friend3.SetName(name: "Paul");
-    friend3.SetPassword(password: "Paul");
-    friend3.SetEmail(email: "Paul@hotdata.dk");
-    friend3.SetOnline(online: false);
-    
     var friend4 = User();
-    friend4.SetName(name: "Louise");
-    friend4.SetPassword(password: "Louise");
-    friend4.SetEmail(email: "Louise@hotdata.dk");
-    friend4.SetOnline(online: false);
+    if !onlyAddBasicFriendsOnce{
+        friend1.SetName(name: "George");
+        friend1.SetEmail(email: "George@hotdata.dk");
+        friend1.SetPassword(password: "George");
+        friend1.SetOnline(online: true);
+    
+        friend2.SetName(name: "Per");
+        friend2.SetPassword(password: "Per");
+        friend2.SetEmail(email: "Per@hotdata.dk");
+        friend2.SetOnline(online: true);
+        
+        friend3.SetName(name: "Paul");
+        friend3.SetPassword(password: "Paul");
+        friend3.SetEmail(email: "Paul@hotdata.dk");
+        friend3.SetOnline(online: false);
+    
+        friend4.SetName(name: "Louise");
+        friend4.SetPassword(password: "Louise");
+        friend4.SetEmail(email: "Louise@hotdata.dk");
+        friend4.SetOnline(online: false);
+    }else{
+        friend1 = FindUser(email: "George@hotdata.dk")!;
+        friend2 = FindUser(email: "Per@hotdata.dk")!;
+        friend3 = FindUser(email: "Paul@hotdata.dk")!;
+        friend4 = FindUser(email: "Louise@hotdata.dk")!;
+    }
     
     /*
     var friend2 = User()
@@ -551,9 +566,13 @@ func AddBasicFriends(){
     friend3.name = "Per";
     */
     userObj.AddToFriendList(user: friend1);
+    friend1.AddToFriendList(user: userObj);
     userObj.AddToFriendList(user: friend2);
+    friend2.AddToFriendList(user: userObj);
     userObj.AddToFriendList(user: friend3);
+    friend3.AddToFriendList(user: userObj);
     userObj.AddToFriendList(user: friend4);
+    friend4.AddToFriendList(user: userObj);
     
     if !onlyAddBasicFriendsOnce{
         
@@ -561,6 +580,7 @@ func AddBasicFriends(){
         userDatabase.append(friend2);
         userDatabase.append(friend3);
         userDatabase.append(friend4);
+        onlyAddBasicFriendsOnce = true;
     }
     
     /*userObj.AddToFriendList(friend2);
