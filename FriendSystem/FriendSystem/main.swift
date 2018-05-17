@@ -211,7 +211,7 @@ class Comments {
     func GetCommentPost() -> String{
         return "\(content) - \(published) - \(editedDate)";
     }
-
+}
 
 class ProfilePage {
     //  private var imageUrl: String?
