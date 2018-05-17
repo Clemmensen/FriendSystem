@@ -12,18 +12,16 @@ import Foundation
 
 
 
-
-
 class User {
     
-    var name: String
-    var email: String
-    var phone: Int
-    var age: Int
-    var friendList: [User] = [];
-    var isUserVerified: Bool
-    var isOnline: Bool = false;
-    var password: String
+    private var name: String
+    private var email: String
+    private var phone: Int
+    private var age: Int
+    private var friendList: [User] = [];
+    private var isUserVerified: Bool
+    private var isOnline: Bool = false;
+    private var password: String
 
     
     init() {
@@ -35,26 +33,28 @@ class User {
         isUserVerified = false
         password = ""
     }
-    func SetName() {
+    func SetName(name: String) {
         
-        if User.init().name == ""
+        if name == ""
         {
             print("Please enter your name: ")
-            User.init().name = readLine()!
+            self.name = readLine()!
+        } else {
+            self.name = name;
         }
     }
     func SetEmail() {
         
-        if User.init().email == ""
+        if self.email == ""
         {
-            print("Please enter your name: ")
+            print("Please enter your email: ")
             User.init().email = readLine()!
         }
     }
     
     func SetPhone() {
         
-        if User.init().phone == 0
+        if self.phone == 0
         {
             print("Please enter your phone number: ")
             var tempInt = readLine()
@@ -69,7 +69,7 @@ class User {
     
     func SetAge() {
         
-        if User.init().age == 0
+        if self.age == 0
         {
             print("Please enter your age: ")
             var tempInt = readLine()
@@ -103,14 +103,26 @@ class User {
     func GetEmail() -> String{
         return email;
     }
+    
+    
+    func AddToFriendList(user: User){
+        self.friendList.append(user);
+    }
+    
+    func SetOnline(online: Bool){
+        self.isOnline = online;
+    }
+    
+    
 }
 
 
 
 
 
+var userDatabase: [User] = [];
+
 var userObj: User = User();
-userObj.name = "Casper";
 
 
 
@@ -269,7 +281,7 @@ class CommentChat {
     }
     
     func GetComment() -> String{
-        return "\n\(user.name) wrote at \(published):\n\(content)"
+        return "\n\(user.GetName()) wrote at \(published):\n\(content)"
     }
 }
 
@@ -386,12 +398,12 @@ class OnlineBox {
                     /// Shows all friends that matches the query and asks if user meant that person
                     var userCorrectSelection = false;
                     for user in friendList {
-                        if(user.name.uppercased().contains(chatChoice)){
+                        if(user.GetName().uppercased().contains(chatChoice)){
                             
                             /// This makes sure that a Y/N confirmation is made
                             while !userCorrectSelection{
                             
-                                print("Did you want to chat with \(user.name)? Y/N");
+                                print("Did you want to chat with \(user.GetName())? Y/N");
                                 if let selection = readLine()?.uppercased(){
                                     switch selection {
                                     case "Y":
@@ -441,7 +453,50 @@ class OnlineBox {
     }
 }
 
+
+
+
+
+func ShowChatInterface(){
+    /**
+     Chat is called by making a call to myOnlineBox.DisplayOnlineBox
+     While the OnlineBox is active the focus in regards to CLI is kept there
+     */
+    var myOnlineBox = OnlineBox();
     
+    var friend1 = User();
+    friend1.SetName(name: "George");
+    friend1.SetOnline(online: true);
+    
+    var friend2 = User();
+    friend2.SetName(name: "Per");
+    friend2.SetOnline(online: true);
+    
+    var friend3 = User();
+    friend3.SetName(name: "Paul");
+    friend3.SetOnline(online: false);
+    
+    var friend4 = User();
+    friend4.SetName(name: "Louise");
+    friend4.SetOnline(online: false);
+    
+    /*
+    var friend2 = User()
+    friend2.name = "Paul";
+    
+    
+    var friend3 = User()
+    friend3.name = "Per";
+    */
+    userObj.AddToFriendList(user: friend1);
+    /*userObj.AddToFriendList(friend2);
+    userObj.AddToFriendList(friend3);
+    */
+    myOnlineBox.DisplayOnlineBox()
+
+}
+
+
     
 
 //Login
@@ -469,8 +524,8 @@ while isQuit == false {
         switch loginPage {
 
             case "1":
-            print("email: ")
-            if readLine() == User.init().email {
+                print("email: ", terminator: "");
+            /*if readLine() == .email {
                 print("Password: ")
             } else if readLine() != User.init().email {
                     print("Please try again!")
@@ -478,10 +533,17 @@ while isQuit == false {
             if readLine() == User.init().password {
                 print("Succes!")
                 isLoggedIn = true
-            }
+            }*/
 
             case "2":
             print("Register an account!")
+            userObj = User();
+            userObj.SetName(name: "");
+            userObj.SetAge();
+            userObj.SetEmail();
+            userObj.SetPhone();
+            userDatabase.append(userObj);
+            ShowChatInterface();
             
             case "Q":
             print("Quitting");
@@ -515,37 +577,8 @@ while isQuit == false {
     
 
 
-/**
- Chat is called by making a call to myOnlineBox.DisplayOnlineBox
- While the OnlineBox is active the focus in regards to CLI is kept there
-*/
-var myOnlineBox = OnlineBox();
-
-    /*
-var friend1 = User()
-friend1.name = "George"
-friend1.isOnline = true;
-
-
-var friend2 = User()
-friend2.name = "Paul";
-
-
-var friend3 = User()
-friend3.name = "Per";
-
-
-userObj.friendList.append(friend1);
-userObj.friendList.append(friend2);
-userObj.friendList.append(friend3);
-
-
-
-myOnlineBox.DisplayOnlineBox()
-//myOnlineBox.DisplayOnlineBox();
 
 
 
 
-*/
 
