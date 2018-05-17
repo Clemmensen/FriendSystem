@@ -54,10 +54,6 @@ func SetName() {
 
 var userObj: User = User();
 
-
-
-
-
 class ProfilePage {
     private var user: User
     private var imageUrl: String?
