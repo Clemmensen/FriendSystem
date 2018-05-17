@@ -8,6 +8,45 @@
 
 import Foundation
 
+
+//Login
+
+var isLoggedIn = false
+var waitingUsername = false
+var waitingPassword = false
+
+if isLoggedIn == false {
+   
+    switch loginPage {
+        
+    case "1":
+        print("email: ")
+        if readLine() == User.init().email {
+            print("Password: ")
+            else readLine() != User.init().email {
+                print("Please try again!")  {
+          
+            }
+        }
+            if readLine() == User.init().password {
+            print("Succes!")
+            isLoggedIn = true
+    }
+}
+        
+        
+    case "2":
+        print("Register an account!")
+        
+        
+    }
+}
+ 
+
+
+
+
+
 class User {
     
     var name: String
@@ -17,6 +56,7 @@ class User {
     var friendList: [User] = [];
     var isUserVerified: Bool
     var isOnline: Bool = false;
+    var password: String
 
     
     init() {
@@ -26,6 +66,54 @@ class User {
         age = 0
         friendList = []
         isUserVerified = false
+        password = ""
+        
+        func SetName() {
+            
+            if User.init().name == ""
+            {
+                print("Please enter your name: ")
+                User.init().name = readLine()!
+            }
+        }
+        func SetEmail() {
+            
+            if User.init().email == ""
+            {
+                print("Please enter your name: ")
+                User.init().email = readLine()!
+            }
+        }
+        
+        func SetPhone() {
+            
+            if User.init().phone == 0
+            {
+                print("Please enter your phone number: ")
+                var tempInt = readLine()
+                let chosenPhone = Int(tempInt!)
+                let optionalInt : Int? = chosenPhone
+                if var optionalInt = chosenPhone {
+                    optionalInt = User.init().phone
+                }
+            }
+            
+        }
+        
+        func SetAge() {
+            
+            if User.init().age == 0
+            {
+                print("Please enter your age: ")
+                var tempInt = readLine()
+                let chosenPhone = Int(tempInt!)
+                let optionalInt : Int? = chosenPhone
+                if var optionalInt = chosenPhone {
+                    optionalInt = User.init().age
+                }
+            }
+        }
+
     }
     
     func ShowFriendList() -> [User]{
@@ -51,55 +139,9 @@ class User {
     
 
 
-    func SetName() {
-        
-        if User.init().name == ""
-        {
-            print("Please enter your name: ")
-            User.init().name = readLine()!
-        }
-    }
-    func SetEmail() {
-        
-        if User.init().email == ""
-        {
-            print("Please enter your name: ")
-            User.init().email = readLine()!
-        }
-    }
-
-    func SetPhone() {
-        
-        if User.init().phone == 0
-        {
-            print("Please enter your phone number: ")
-            var tempInt = readLine()
-            let chosenPhone = Int(tempInt!)
-            let optionalInt : Int? = chosenPhone
-            if var optionalInt = chosenPhone {
-                optionalInt = User.init().phone
-            }
-        }
-        
-    }
-
-    func SetAge() {
-        
-        if User.init().age == 0
-        {
-            print("Please enter your age: ")
-            var tempInt = readLine()
-            let chosenPhone = Int(tempInt!)
-            let optionalInt : Int? = chosenPhone
-            if var optionalInt = chosenPhone {
-                optionalInt = User.init().age
-            }
-        }
-    }
-}
 
 
-// Creates an object of user
+
 var userObj: User = User();
 userObj.name = "Casper";
 
