@@ -52,7 +52,11 @@ func SetName() {
     }
 }
 
+// Creates an object of user
 var userObj: User = User();
+
+
+
 
 class ProfilePage {
     private var user: User
@@ -169,6 +173,8 @@ class Comments {
 
 
 
+
+
 /// Holds an enum that signals a smiley
 class Smiley {
     private var type: SmileyType;
@@ -185,6 +191,8 @@ enum SmileyType {
 
 
 
+
+/// A single entry / comment in the chat between users
 class CommentChat {
     private let user: User;
     private let content: String;
@@ -201,6 +209,10 @@ class CommentChat {
 }
 
 
+
+
+
+/// A pervious chat between users
 class PastChat {
     private var comments: [CommentChat] = [];
     private var users: [User] = [];
@@ -208,24 +220,69 @@ class PastChat {
     func ShowComments(){
         
     }
+    
+    func CheckUserInChat(person: User) -> Bool{
+        for user in self.users {
+            if user === person {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    func AddUser(newUser: User){
+        // Check if user is already in list
+        var isUserInList = false;
+        for user in self.users {
+            if user === newUser {
+                isUserInList = true;
+            }
+        }
+        
+        // Reacts according to whether user exists in the list
+        if isUserInList{
+            print("An error has occured, the user is already a member of the chat");
+        } else {
+            self.users.append(newUser);
+        }
+        
+    }
 }
 
+// An array of oldChats
+var oldChats: [PastChat] = [];
 
+
+
+
+
+
+/// A box for chatting with one or more users
 class ChatBox {
     private var user: User;
     private var smiley: [Smiley] = [];
     
     init (user: User){
         self.user = user;
+    }
+    
+    func makeComment(content: String, smiley: Smiley?){
         
     }
     
-    func makeComment(content: String, smiley: Smiley){
+    func chatArchive(friend: User) -> PastChat{
+        for chat in oldChats {
+            if chat.CheckUserInChat(person: userObj) && chat.CheckUserInChat(person: friend){
+                return chat;
+            }
+        }
         
-    }
-    
-    func chatArchive(archive: PastChat){
-        
+        // Creates an empty old chat between User A and currentUser
+        let newChat = PastChat();
+        newChat.AddUser(newUser: userObj);
+        newChat.AddUser(newUser: friend);
+        oldChats.append(newChat);
+        return newChat;
     }
     
 }
@@ -253,6 +310,7 @@ class OnlineBox {
                 
                 if chatChoice != "Q" {
                     
+                    /// Shows all friends that matches the query and asks if user meant that person
                     for user in friendList {
                         if(user.name.contains(chatChoice)){
                             
@@ -289,7 +347,18 @@ class OnlineBox {
     }
     
     func StartChatWith(friend: User){
-        // let tempChatBox = ChatBox(user: friend)
+        let newChatBox = ChatBox(user: friend);
+        let chat = newChatBox.chatArchive(friend: friend);
+        var chatChoice = "";
+        while chatChoice != "Q" {
+            print("""
+                Q and enter to quit the chat with \(friend.name)
+                Or write a message and press enter to send.
+            """);
+            if let userInput = readLine() {
+                chatChoice = userInput;
+            }
+        }
     }
 }
 
