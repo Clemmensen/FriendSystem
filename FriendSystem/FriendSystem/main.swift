@@ -40,68 +40,68 @@ class User {
         return name;
     }
     func GetAge() -> String{
-        return age;
+        return "age";
     }
     func GetPgone() -> String{
-        return phone;
+        return "phone";
     }
     func GetEmail() -> String{
         return email;
     }
     
 
-}
 
-func SetName() {
-    
-    if User.init().name == ""
-    {
-        print("Please enter your name: ")
-        User.init().name = readLine()!
-    }
-}
-func SetEmail() {
-    
-    if User.init().email == ""
-    {
-        print("Please enter your name: ")
-        User.init().email = readLine()!
-    }
-}
-
-func SetPhone() {
-    
-    if User.init().phone == 0
-    {
-        print("Please enter your phone number: ")
-        var tempInt = readLine()
-        let chosenPhone = Int(tempInt!)
-        let optionalInt : Int? = chosenPhone
-        if var optionalInt = chosenPhone {
-            optionalInt = User.init().phone
+    func SetName() {
+        
+        if User.init().name == ""
+        {
+            print("Please enter your name: ")
+            User.init().name = readLine()!
         }
     }
-    
-}
+    func SetEmail() {
+        
+        if User.init().email == ""
+        {
+            print("Please enter your name: ")
+            User.init().email = readLine()!
+        }
+    }
 
-func SetAge() {
-    
-    if User.init().age == 0
-    {
-        print("Please enter your age: ")
-        var tempInt = readLine()
-        let chosenPhone = Int(tempInt!)
-        let optionalInt : Int? = chosenPhone
-        if var optionalInt = chosenPhone {
-            optionalInt = User.init().age
+    func SetPhone() {
+        
+        if User.init().phone == 0
+        {
+            print("Please enter your phone number: ")
+            var tempInt = readLine()
+            let chosenPhone = Int(tempInt!)
+            let optionalInt : Int? = chosenPhone
+            if var optionalInt = chosenPhone {
+                optionalInt = User.init().phone
+            }
+        }
+        
+    }
+
+    func SetAge() {
+        
+        if User.init().age == 0
+        {
+            print("Please enter your age: ")
+            var tempInt = readLine()
+            let chosenPhone = Int(tempInt!)
+            let optionalInt : Int? = chosenPhone
+            if var optionalInt = chosenPhone {
+                optionalInt = User.init().age
+            }
         }
     }
 }
-
 
 
 // Creates an object of user
 var userObj: User = User();
+userObj.name = "Casper";
 
 
 
@@ -257,7 +257,7 @@ class CommentChat {
     }
     
     func GetComment() -> String{
-        return "\(published) - \(content)"
+        return "\n\(user.name) wrote at \(published):\n\(content)"
     }
 }
 
@@ -366,17 +366,17 @@ class OnlineBox {
             let friendList: [User] = userObj.ShowFriendList();
             self.ShowAvailable(friends: friendList);
             
-            if let userChoice = readLine(){
+            if let userChoice = readLine()?.uppercased(){
                 chatChoice = userChoice;
                 
                 if chatChoice != "Q" {
                     
                     /// Shows all friends that matches the query and asks if user meant that person
+                    var userCorrectSelection = false;
                     for user in friendList {
-                        if(user.name.contains(chatChoice)){
+                        if(user.name.uppercased().contains(chatChoice)){
                             
                             /// This makes sure that a Y/N confirmation is made
-                            var userCorrectSelection = false;
                             while !userCorrectSelection{
                             
                                 print("Did you want to chat with \(user.name)? Y/N");
@@ -403,7 +403,7 @@ class OnlineBox {
     
     func ShowAvailable(friends: [User]){
         for user in friends {
-            print(user.IsUserOnline() ? "Online: " : "Offline: " + "\(user.GetName)");
+            print((user.IsUserOnline() ? "Online: " : "Offline: ") + "\(user.GetName())");
         }
     }
     
@@ -413,9 +413,10 @@ class OnlineBox {
         var chatChoice = "";
         while chatChoice != "Q" {
             
+            print("\n\n");
             chat.ShowComments();
             print("""
-                Q and enter to quit the chat with \(friend.name)
+                Q and enter to quit the chat with \(friend.GetName())
                 Or write a message and press enter to send.
             """);
             if let userInput = readLine()?.uppercased() {
@@ -435,7 +436,31 @@ class OnlineBox {
  While the OnlineBox is active the focus in regards to CLI is kept there
 */
 var myOnlineBox = OnlineBox();
+
+var friend1 = User()
+friend1.name = "George"
+friend1.isOnline = true;
+
+
+var friend2 = User()
+friend2.name = "Paul";
+
+
+var friend3 = User()
+friend3.name = "Per";
+
+
+userObj.friendList.append(friend1);
+userObj.friendList.append(friend2);
+userObj.friendList.append(friend3);
+
+
+
+myOnlineBox.DisplayOnlineBox()
 //myOnlineBox.DisplayOnlineBox();
+
+
+
 
 
 
