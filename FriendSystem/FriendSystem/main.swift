@@ -135,6 +135,7 @@ class User {
     
     func AddToFriendList(user: User){
         self.friendList.append(user);
+        user.friendList.append(self);
     }
     
     func SetOnline(online: Bool){
@@ -153,17 +154,17 @@ var userObj: User = User();
 class Post {
     private var title: String
     private var content: String
-    private var comments: Array<Comments>
-    private var published: Date
+    private var comments: Array<Comments> = []
+    private var published: Date = Date()
     //private var like: Array<Likes>
     //private var sharedPost: Post?
     
     
-    init(title: String, content: String, comments: Array<Comments>, published: Date /*like: Array<Likes>, sharedPost: Post*/ ) {
+    init(title: String, content: String /*like: Array<Likes>, sharedPost: Post*/ ) {
         self.title = title
         self.content = content
-        self.comments = comments
-        self.published = published
+        /*self.comments = comments
+        self.published = published*/
        // self.like = like
        // self.sharedPost = sharedPost
     }
@@ -176,21 +177,28 @@ class Post {
     func MakeComment(post: Post, user: User, content: String){
         
     }
-    func  GetPost(title: String, content: String, published: Date, comments: Array<Comments>){
-       
-        func GetTitle() -> String {
-            return title;
-        }
-        func GetContent() -> String {
-            return content;
-        }
-        func GetPublished() -> Date {
-            return published;
-        }
-        func GetComments() -> Array<Comments>{
-            return comments;
-        }
+    func  GetPost() -> String{
+        var postString: String = "";
+        postString += title + "\n";
+        postString += "Date: \(published)\n";
+        postString += "\(content)\n\n";
+        postString += "Comments: \(comments)\n";
+        return postString;
     }
+       
+    func GetTitle() -> String {
+        return title;
+    }
+    func GetContent() -> String {
+        return content;
+    }
+    func GetPublished() -> Date {
+        return published;
+    }
+    func GetComments() -> Array<Comments>{
+        return comments;
+    }
+    
     //func LikePost(user: User, type: LikeType){}
     //func SharePost(post: Post){}
 }
@@ -268,15 +276,52 @@ class ProfilePage {
     func SetBirthDay(date: Date) -> Void {
         
     }
-    func MakePost(title: String, content: String, published: Date){
-        
-        
+    func MakePost(){
+        print("Please input title");
+        if let userInputTitle = readLine(){
+            print("Please input content")
+            if let userInputContent = readLine(){
+                var newPost = Post(title: userInputTitle, content: userInputContent);
+                posts.append(newPost);
+            }
+        }
     }
-    func DeletePost(post: Post){
-        
+    func DeletePost(){
+        for i in 0..<posts.count {
+            print("\(i+1): \(posts[i].GetTitle())");
+        }
+        print("Please inout number that represents the post that should be deleted:")
+        if let userChoice = readLine(){
+            if let IntUserChoice = Int(userChoice){
+                if IntUserChoice<posts.count{
+                    
+                    var userCorrectConfirm = false;
+                    print("You are about to delete:\(posts[IntUserChoice].GetTitle())\nWith the content of:\(posts[IntUserChoice].GetContent())\n\nAre you sure Y/N?: ", terminator: "");
+                    if let userConfirm = readLine(){
+                        switch userConfirm.uppercased(){
+                        case "Y":
+                        posts.remove(at: IntUserChoice);
+                        print("Post deleted");
+                        case "N":
+                            print("Deletion aborted");
+                        default:
+                            print("Selection not recognized");
+                        }
+                    }
+                }
+            }
+        }
+        /*for i in 0..<posts.count {
+            if posts[i] === post{
+                posts.remove(at: i);
+            }
+        }*/
     }
     func ShowPosts() -> Void {
-        print("Showing posts");
+        print("\n\n\n\nShowing posts");
+        for post in posts{
+            print(post.GetPost());
+        }
     }
     func ReturnUser() -> User {
         return user;
@@ -566,13 +611,9 @@ func AddBasicFriends(){
     friend3.name = "Per";
     */
     userObj.AddToFriendList(user: friend1);
-    friend1.AddToFriendList(user: userObj);
     userObj.AddToFriendList(user: friend2);
-    friend2.AddToFriendList(user: userObj);
     userObj.AddToFriendList(user: friend3);
-    friend3.AddToFriendList(user: userObj);
     userObj.AddToFriendList(user: friend4);
-    friend4.AddToFriendList(user: userObj);
     
     if !onlyAddBasicFriendsOnce{
         
@@ -611,8 +652,10 @@ func MainInterface(){
     while userChoice != "Q" {
         print("""
                     \n\n\n\tQ - Quit
-                    1 - Vis posts
-                    2 - Vis chatbox
+                    1 - Show posts
+                    2 - Make post
+                    3 - Delete post
+                    4 - Show chatbox
                 """);
         
         if let userInput = readLine() {
@@ -623,6 +666,10 @@ func MainInterface(){
             case "1":
                 userProfilepage.ShowPosts();
             case "2":
+                userProfilepage.MakePost();
+            case "3":
+                userProfilepage.DeletePost();
+            case "4":
                 let myOnlineBox = OnlineBox();
                 myOnlineBox.DisplayOnlineBox()
             default:
