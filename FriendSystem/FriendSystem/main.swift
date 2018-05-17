@@ -175,7 +175,7 @@ class Post {
         
     }
     func MakeComment(post: Post, user: User, content: String){
-        
+    
     }
     func  GetPost() -> String{
         var postString: String = "";
@@ -223,13 +223,15 @@ enum LikeType {
 }
 
 class Comments {
-    private var user: [User] = []
-    private var post: [Post] = []
+    private var user: User
+    private var post: Post
     private var content: String
     private var published: Date
     private var editedDate: Date
     
     init(user: User, post: Post, content: String, published: Date, editedDate: Date) {
+        self.user = user
+        self.post = post
         self.content = content;
         self.published = published;
         self.editedDate = editedDate;
@@ -238,7 +240,7 @@ class Comments {
   //  func EditComment(content: String) -> Void {}
     
     func CreatetComment(){
-  //      var viewPost: String = Post.MakeComment(<#T##Post#>);
+
     }
     func GetCommentPost() -> String{
         return "\(content) - \(published) - \(editedDate)";
