@@ -7,10 +7,10 @@
 import Foundation
 
 // 4 Logins that all users has as friends:
-// George@hotdata.dk , George
-// Per@hotdata.dk , Per
-// Paul@hotdata.dk , Paul
-// Louise@hotdata.dk , Louise
+// Leia@hotdata.dk , Leia
+// Han@hotdata.dk , Han
+// Luke@hotdata.dk , Luke
+// Darth@hotdata.dk , Darth
 // Usefull for checking chat functionality since AddToFriendList not yet implemented
 
 
@@ -782,24 +782,24 @@ class BasicFriendPopulation {
         var friend3 = User();
         var friend4 = User();
         if !myApp.onlyAddBasicFriendsOnce{
-            friend1.SetName(name: "George");
-            friend1.SetEmail(email: "George@hotdata.dk");
-            friend1.SetPassword(password: "George");
+            friend1.SetName(name: "Leia");
+            friend1.SetEmail(email: "Leia@hotdata.dk");
+            friend1.SetPassword(password: "Leia");
             friend1.SetOnline(online: true);
         
-            friend2.SetName(name: "Per");
-            friend2.SetPassword(password: "Per");
-            friend2.SetEmail(email: "Per@hotdata.dk");
+            friend2.SetName(name: "Luke Skywalker");
+            friend2.SetPassword(password: "Luke");
+            friend2.SetEmail(email: "Luke@hotdata.dk");
             friend2.SetOnline(online: true);
             
-            friend3.SetName(name: "Paul");
-            friend3.SetPassword(password: "Paul");
-            friend3.SetEmail(email: "Paul@hotdata.dk");
+            friend3.SetName(name: "Han Solo");
+            friend3.SetPassword(password: "Han");
+            friend3.SetEmail(email: "Han@hotdata.dk");
             friend3.SetOnline(online: false);
         
-            friend4.SetName(name: "Louise");
-            friend4.SetPassword(password: "Louise");
-            friend4.SetEmail(email: "Louise@hotdata.dk");
+            friend4.SetName(name: "Darth Vader");
+            friend4.SetPassword(password: "Darth");
+            friend4.SetEmail(email: "Darth@hotdata.dk");
             friend4.SetOnline(online: false);
         }else{
             friend1 = FindUser(email: "George@hotdata.dk")!;
