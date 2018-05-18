@@ -205,7 +205,7 @@ class User {
 class Post {
     private var title: String
     private var content: String
-    private var comments: Array<Comments> = []
+    //private var comments: Array<Comments> = []
     private var published: Date = Date()
     //private var like: Array<Likes>
     //private var sharedPost: Post?
@@ -219,21 +219,18 @@ class Post {
        // self.like = like
        // self.sharedPost = sharedPost
     }
-    func EditPost(title: String, content: String){
-        
-    }
-    func DeleteComment(comment: Comments) {
-        
-    }
-    func MakeComment(post: Post, user: User, content: String){
+    //func EditPost(title: String, content: String){}
     
-    }
+    //func DeleteComment(comment: Comments) {}
+    
+    //func MakeComment(post: Post, user: User, content: String){}
+    
     func  GetPost() -> String{
         var postString: String = "";
         postString += title + "\n";
         postString += "Date: \(published)\n";
         postString += "\(content)\n\n";
-        postString += "Comments: \(comments)\n";
+        //postString += "Comments: \(comments)\n";
         return postString;
     }
        
@@ -246,16 +243,17 @@ class Post {
     func GetPublished() -> Date {
         return published;
     }
+    /*
     func GetComments() -> Array<Comments>{
         return comments;
     }
-    
+    */
     //func LikePost(user: User, type: LikeType){}
     //func SharePost(post: Post){}
 }
 
 
-
+/*
 // Likes lavet med enum
 class Likes {
     private var user: [User] = []
@@ -298,7 +296,7 @@ class Comments {
         return "\(content) - \(published) - \(editedDate)";
     }
 }
-
+*/
 class ProfilePage {
     //  private var imageUrl: String?
     private var posts: Array<Post> = []
@@ -327,9 +325,9 @@ class ProfilePage {
     /*func GetBirthDay() -> Date{
      return birthDay!;
      }*/
-    func SetBirthDay(date: Date) -> Void {
-        
-    }
+   // func SetBirthDay(date: Date) -> Void {}
+    
+    
     func MakePost(){
         print("Please input title");
         if let userInputTitle = readLine(){
