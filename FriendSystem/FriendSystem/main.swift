@@ -481,7 +481,7 @@ class CommentChat {
     }
     
     func GetComment() -> String{
-        return "\n\(user.GetName()) wrote at \(published):\n\(content)"
+        return "\n\(user.GetName()) wrote at \(published):\n\(content.replacingOccurrences(of: ":)", with: "😀"))"
     }
 }
 
