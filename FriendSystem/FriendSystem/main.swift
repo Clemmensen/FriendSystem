@@ -53,7 +53,7 @@ class User {
             print("Please enter your password: ")
             self.password = readLine()!
         } else {
-            self.password = name;
+            self.password = password;
         }
     }
     
@@ -802,10 +802,10 @@ class BasicFriendPopulation {
             friend4.SetEmail(email: "Darth@hotdata.dk");
             friend4.SetOnline(online: false);
         }else{
-            friend1 = FindUser(email: "George@hotdata.dk")!;
-            friend2 = FindUser(email: "Per@hotdata.dk")!;
-            friend3 = FindUser(email: "Paul@hotdata.dk")!;
-            friend4 = FindUser(email: "Louise@hotdata.dk")!;
+            friend1 = FindUser(email: "Leia@hotdata.dk")!;
+            friend2 = FindUser(email: "Luke@hotdata.dk")!;
+            friend3 = FindUser(email: "Han@hotdata.dk")!;
+            friend4 = FindUser(email: "Darth@hotdata.dk")!;
         }
         
         myApp.userObj.AddToFriendList(user: friend1);
