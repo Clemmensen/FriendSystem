@@ -120,11 +120,11 @@ class User {
     func GetName() -> String{
         return name;
     }
-    func GetAge() -> String{
-        return "age";
+    func GetAge() -> Int{
+        return age;
     }
-    func GetPgone() -> String{
-        return "phone";
+    func GetPgone() -> Int{
+        return phone;
     }
     func GetEmail() -> String{
         return email;
@@ -288,7 +288,7 @@ class ProfilePage {
         print("Please inout number that represents the post that should be deleted:")
         if let userChoice = readLine(){
             if var IntUserChoice = Int(userChoice){
-                if IntUserChoice<posts.count && IntUserChoice >= 0{
+                if (IntUserChoice-1)<posts.count && IntUserChoice > 0{
                     IntUserChoice -= 1
                     var userCorrectConfirm = false;
                     print("\nYou are about to delete:\n\(posts[IntUserChoice].GetTitle())\nWith the content of:\n\(posts[IntUserChoice].GetContent())\n\nAre you sure Y/N?: ", terminator: "");
@@ -307,6 +307,8 @@ class ProfilePage {
                             }
                         }
                     }
+                } else {
+                    print("Not a valid selection");
                 }
             }
         }
