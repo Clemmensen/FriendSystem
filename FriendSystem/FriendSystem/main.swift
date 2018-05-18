@@ -264,6 +264,82 @@ class User {
     func SetOnline(online: Bool){
         self.isOnline = online;
     }
+    
+    func VisitUserPage(){
+        print("Part of users name: ", terminator: "");
+        var ShowPageChoice = ""
+        if let userChoice = readLine()?.uppercased(){
+            ShowPageChoice = userChoice;
+            
+            if ShowPageChoice != "Q" {
+                
+                var isBreakOut = false;
+                var aUserIsFound = false;
+                /// Shows all friends that matches the query and asks if user meant that person
+                for user in myApp.userDatabase {
+                    
+                    var userCorrectSelection = false;
+                    if !isBreakOut {
+                        if(user.GetName().uppercased().contains(ShowPageChoice)){
+                            
+                            if user === myApp.userObj{
+                                userCorrectSelection = true;
+                            }
+                            
+                            /// This makes sure that a Y/N confirmation is made
+                            while !userCorrectSelection{
+                                print("Did you want to see \(user.GetName()) posts? Y/N: ", terminator: "");
+                                if let selection = readLine(){
+                                    aUserIsFound = true;
+                                    switch selection.uppercased() {
+                                    case "Y":
+                                        for page in myApp.profileDatabase {
+                                            if page.ReturnUser() === user {
+                                                let userProfilepage = page;
+                                                userProfilepage.ShowPosts();
+                                                print("Wee");
+                                            }
+                                        }
+                                        
+                                        var userCorrectChoiceMade = false;
+                                        while !userCorrectChoiceMade {
+                                            print("That was the users pages\nDo you wish to become friends? Y/N");
+                                            
+                                            if let userChoice = readLine(){
+                                                switch userChoice.uppercased(){
+                                                case "Y":
+                                                    myApp.userObj.AddToFriendList(user: user);
+                                                    print("User added to friend");
+                                                    userCorrectChoiceMade = true;
+                                                case "N":
+                                                    print("Exiting to main menu");
+                                                    userCorrectChoiceMade = true;
+                                                default:
+                                                    print("Selection not recognized");
+                                                }
+                                            }
+                                        }
+                                        
+                                        userCorrectSelection = true;
+                                        isBreakOut = true;
+                                        break;
+                                    case "N":
+                                        userCorrectSelection = true;
+                                    // Do nothing, let loop run
+                                    default:
+                                        print("Selection not recognized");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if !aUserIsFound{
+                    print("No user found by that name")
+                }
+            }
+        }
+    }
 }
 
 
@@ -787,6 +863,7 @@ class MainInitializer{
                         4 - Show chatbox
                         5 - Add a friend
                         6 - Remove a friend
+                        7 - Visit a users page
                     """);
             
             if let userInput = readLine() {
@@ -808,6 +885,8 @@ class MainInitializer{
                     myApp.userObj.AddToFriendList(user: myApp.userObj);
                 case "6":
                     myApp.userObj.RemoveFromFriendList(user: myApp.userObj);
+                case "7":
+                    myApp.userObj.VisitUserPage();
                 default:
                     print("Selection not recognized");
                 }
@@ -889,5 +968,12 @@ class MainInitializer{
 // Starts the program based upon usage of classes with properties and methods
 let myApp = MainInitializer();
 myApp.Main();
+
+
+
+
+
+
+
 
 
