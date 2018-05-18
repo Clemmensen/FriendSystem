@@ -297,7 +297,6 @@ class User {
                                             if page.ReturnUser() === user {
                                                 let userProfilepage = page;
                                                 userProfilepage.ShowPosts();
-                                                print("Wee");
                                             }
                                         }
                                         
