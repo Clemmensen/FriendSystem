@@ -918,8 +918,8 @@ class MainInitializer{
             if isLoggedIn == false {
                 print("""
                     \n\n\n\tWELCOME TO THE DEATH STAR FRIEND SYSTEM\n\tQ - Quit
-                    1 - Log på
-                    2 - Opret konto
+                    1 - Log on
+                    2 - Make an account
                     Make your choice:
                 """, terminator: " ");
         
