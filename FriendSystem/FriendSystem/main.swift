@@ -195,6 +195,72 @@ class User {
         }
     }
     
+    
+    
+    func RemoveFromFriendList(user: User){
+        if user !== myApp.userObj{
+            print("Sorry, this functionality is not yet added, since it is not needed at the moment");
+            /* No need to dynamically delete friends - easier not to dynamically make the two users friends
+            self.friendList.append(user);
+            user.friendList.append(self);*/
+        }else{
+            
+            
+            let myOnlineBox = OnlineBox();
+            myOnlineBox.ShowAvailable(friends: self.friendList);
+            
+            print("Part of users name to remove from list: ", terminator: "");
+            var removeFriendChoice = ""
+            if let userChoice = readLine()?.uppercased(){
+                removeFriendChoice = userChoice;
+                
+                if removeFriendChoice != "Q" {
+                    
+                    var isBreakOut = false;
+                    var aUserIsFound = false;
+                    /// Shows all friends that matches the query and asks if user meant that person
+                    for i in 0..<self.friendList.count {
+                        
+                        var userCorrectSelection = false;
+                        if !isBreakOut {
+                            if(self.friendList[i].GetName().uppercased().contains(removeFriendChoice)){
+                                
+                                /// This makes sure that a Y/N confirmation is made
+                                while !userCorrectSelection{
+                                    
+                                    print("Did you want to delete friendship with \(self.friendList[i].GetName())? Y/N: ", terminator: "");
+                                    if let selection = readLine(){
+                                        aUserIsFound = true;
+                                        switch selection.uppercased() {
+                                        case "Y":
+                                            for j in 0..<self.friendList[i].friendList.count{
+                                                if self.friendList[i].friendList[j] === myApp.userObj{
+                                                    self.friendList[i].friendList.remove(at: j);
+                                                }
+                                            }
+                                            self.friendList.remove(at: i);
+                                            userCorrectSelection = true;
+                                            isBreakOut = true;
+                                            break;
+                                        case "N":
+                                            userCorrectSelection = true;
+                                        // Do nothing, let loop run
+                                        default:
+                                            print("Selection not recognized");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if !aUserIsFound{
+                        print("No user by that name")
+                    }
+                }
+            }
+        }
+    }
+    
     func SetOnline(online: Bool){
         self.isOnline = online;
     }
@@ -720,6 +786,7 @@ class MainInitializer{
                         3 - Delete post
                         4 - Show chatbox
                         5 - Add a friend
+                        6 - Remove a friend
                     """);
             
             if let userInput = readLine() {
@@ -738,6 +805,8 @@ class MainInitializer{
                     myOnlineBox.DisplayOnlineBox();
                 case "5":
                     myApp.userObj.AddToFriendList(user: myApp.userObj);
+                case "6":
+                    myApp.userObj.RemoveFromFriendList(user: myApp.userObj);
                 default:
                     print("Selection not recognized");
                 }
