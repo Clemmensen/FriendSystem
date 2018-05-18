@@ -6,6 +6,13 @@
 
 import Foundation
 
+// 4 Logins that all users has as friends:
+// George@hotdata.dk , George
+// Per@hotdata.dk , Per
+// Paul@hotdata.dk , Paul
+// Louise@hotdata.dk , Louise
+// Usefull for checking chat functionality since AddToFriendList not yet implemented
+
 
 class User {
     
@@ -136,19 +143,6 @@ class User {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Post {
     private var title: String
     private var content: String
@@ -200,6 +194,7 @@ class Post {
     //func LikePost(user: User, type: LikeType){}
     //func SharePost(post: Post){}
 }
+
 
 
 // Likes lavet med enum
@@ -334,25 +329,7 @@ class ProfilePage {
 
 
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-/*
-/// Holds an enum that signals a smiley
+/// Holds an enum that signals a smiley - TODO
 class Smiley {
     private var type: SmileyType;
     init(smiley: SmileyType){
@@ -360,12 +337,10 @@ class Smiley {
     }
 }
 
-/// The available types of smileys
+/// The available types of smileys - TODO
 enum SmileyType {
     case SmileyFace, CoolSmiley, AngrySmiley, SleepySmiley, EvilSmiley, AngelSmiley;
-}*/
-
-
+}
 
 
 
@@ -576,6 +551,7 @@ class OnlineBox {
 
 class BasicFriendPopulation {
 
+    // Helps find a user based on an e-mail adress written (only used for appending friends below so far)
     func FindUser(email: String) -> User?{
         for user in myApp.userDatabase{
             if user.GetEmail() == email{
@@ -585,13 +561,8 @@ class BasicFriendPopulation {
         return nil;
     }
 
+    // Everybody needs to have some friends (obstructs the point of our UML a bit since we say that one can have 0..* User in friendList, but for testing purposes, having friends would be nice
     func AddBasicFriends(){
-        /**
-         Chat is called by making a call to myOnlineBox.DisplayOnlineBox
-         While the OnlineBox is active the focus in regards to CLI is kept there
-         */
-        
-        
         var friend1 = User();
         var friend2 = User();
         var friend3 = User();
@@ -623,14 +594,6 @@ class BasicFriendPopulation {
             friend4 = FindUser(email: "Louise@hotdata.dk")!;
         }
         
-        /*
-        var friend2 = User()
-        friend2.name = "Paul";
-        
-        
-        var friend3 = User()
-        friend3.name = "Per";
-        */
         myApp.userObj.AddToFriendList(user: friend1);
         myApp.userObj.AddToFriendList(user: friend2);
         myApp.userObj.AddToFriendList(user: friend3);
@@ -644,10 +607,6 @@ class BasicFriendPopulation {
             myApp.userDatabase.append(friend4);
             myApp.onlyAddBasicFriendsOnce = true;
         }
-        
-        /*myApp.userObj.AddToFriendList(friend2);
-        myApp.userObj.AddToFriendList(friend3);
-        */
 
     }
     
@@ -655,21 +614,33 @@ class BasicFriendPopulation {
 
     
 
-
+/// The main instance of the program
 class MainInitializer{
-    // An array of oldChats
+    
+    // TODO: Make properties private and make methods to get set properties
+    
+    /// An array that has all chats - consisting of 0 to multiple CommentChat that has been made between [User]
     var oldChats: [PastChat] = [];
     
+    /// An array of the different profiles that exists withn the system - each linked to a specific User
     var profileDatabase: [ProfilePage] = [];
     
+    /// An array having all of the User(s) that has been created so far
     var userDatabase: [User] = [];
     
+    /// A pointer that keeps that of the current User which is logged in, generic empty User initially
     var userObj: User = User();
 
+    /// 4 Friends are created when the first user is made, this variable helps make sure that this only happens once.
     var onlyAddBasicFriendsOnce = false;
 
+    /// Menu after a user has been created or logged in
     func MainInterface(){
+        
+        // Temporary empty page object - if user has a page it drops this object
         var userProfilepage: ProfilePage = ProfilePage(user: userObj);
+        
+        // Checks whether user has a profilePage, otherwise it appends the empty one to database array
         var hasPage = false;
         for page in profileDatabase {
             if page.ReturnUser() === userObj {
@@ -713,19 +684,11 @@ class MainInitializer{
     }
 
 
+    /// First menu with user login or user creatiion
     func Main(){
-        
-        
-        
-        
-        
-        //Login
 
         let isLoggedIn = false
         
-        //var waitingUsername = false
-        //var waitingPassword = false
-
         var isQuit = false;
         while isQuit == false {
             if isLoggedIn == false {
@@ -741,12 +704,17 @@ class MainInitializer{
                 }
                 switch loginPage {
 
+                    // Promts for user to input email and login details - login successfull if match
                     case "1":
                     print("Email: ", terminator: "");
                     if let userInput = readLine(){
                         for user in userDatabase{
-                            if user.GetEmail() == userInput {
+                            
+                            // Email case-insensitive
+                            if user.GetEmail().uppercased() == userInput.uppercased() {
                                 print("Password: ", terminator: "");
+                                
+                                // Password case-sensitive
                                 if let userPass = readLine(){
                                     if let userObjTemp = user.VerifyPassword(password: userPass){
                                         userObj = userObjTemp;
@@ -785,6 +753,7 @@ class MainInitializer{
 }
 
 
+// Starts the program based upon usage of classes with properties and methods
 let myApp = MainInitializer();
 myApp.Main();
 
