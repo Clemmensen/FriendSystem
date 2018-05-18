@@ -132,8 +132,67 @@ class User {
     
     
     func AddToFriendList(user: User){
-        self.friendList.append(user);
-        user.friendList.append(self);
+        if user !== myApp.userObj{
+            self.friendList.append(user);
+            user.friendList.append(self);
+        }else{
+            
+            
+            
+            
+            print("Part of users name: ", terminator: "");
+            var addFriendChoice = ""
+            if let userChoice = readLine()?.uppercased(){
+                addFriendChoice = userChoice;
+                
+                if addFriendChoice != "Q" {
+                    
+                    var isBreakOut = false;
+                    var aUserIsFound = false;
+                    /// Shows all friends that matches the query and asks if user meant that person
+                    for user in myApp.userDatabase {
+                        
+                        var userCorrectSelection = false;
+                        if !isBreakOut {
+                            if(user.GetName().uppercased().contains(addFriendChoice)){
+                                
+                                // Checks if user is already friend with the user - if yes, then ignores
+                                for friend in self.friendList{
+                                    if friend === user {
+                                        userCorrectSelection = true;
+                                    }
+                                }
+                                
+                                /// This makes sure that a Y/N confirmation is made
+                                while !userCorrectSelection{
+                                    
+                                    print("Did you want to be friends with \(user.GetName())? Y/N: ", terminator: "");
+                                    if let selection = readLine(){
+                                        aUserIsFound = true;
+                                        switch selection.uppercased() {
+                                        case "Y":
+                                            self.friendList.append(user);
+                                            user.friendList.append(self);
+                                            userCorrectSelection = true;
+                                            isBreakOut = true;
+                                            break;
+                                        case "N":
+                                            userCorrectSelection = true;
+                                        // Do nothing, let loop run
+                                        default:
+                                            print("Selection not recognized");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if !aUserIsFound{
+                        print("No user by that name")
+                    }
+                }
+            }
+        }
     }
     
     func SetOnline(online: Bool){
@@ -662,6 +721,7 @@ class MainInitializer{
                         2 - Make post
                         3 - Delete post
                         4 - Show chatbox
+                        5 - Add a friend
                     """);
             
             if let userInput = readLine() {
@@ -677,7 +737,9 @@ class MainInitializer{
                     userProfilepage.DeletePost();
                 case "4":
                     let myOnlineBox = OnlineBox();
-                    myOnlineBox.DisplayOnlineBox()
+                    myOnlineBox.DisplayOnlineBox();
+                case "5":
+                    myApp.userObj.AddToFriendList(user: myApp.userObj);
                 default:
                     print("Selection not recognized");
                 }
