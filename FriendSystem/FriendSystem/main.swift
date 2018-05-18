@@ -793,6 +793,7 @@ class MainInitializer{
                 userChoice = userInput.uppercased();
                 switch userChoice {
                 case "Q":
+                    myApp.userObj.SetOnline(online: false)
                     break;
                 case "1":
                     userProfilepage.ShowPosts();
@@ -849,6 +850,7 @@ class MainInitializer{
                                 if let userPass = readLine(){
                                     if let userObjTemp = user.VerifyPassword(password: userPass){
                                         userObj = userObjTemp;
+                                        userObj.SetOnline(online: true)
                                         MainInterface();
                                     }
                                 }
