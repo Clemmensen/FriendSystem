@@ -302,20 +302,33 @@ class User {
                                         }
                                         
                                         var userCorrectChoiceMade = false;
-                                        while !userCorrectChoiceMade {
-                                            print("That was the users pages\nDo you wish to become friends? Y/N");
-                                            
-                                            if let userChoice = readLine(){
-                                                switch userChoice.uppercased(){
-                                                case "Y":
-                                                    myApp.userObj.AddToFriendList(user: user);
-                                                    print("User added to friend");
-                                                    userCorrectChoiceMade = true;
-                                                case "N":
-                                                    print("Exiting to main menu");
-                                                    userCorrectChoiceMade = true;
-                                                default:
-                                                    print("Selection not recognized");
+                                        
+                                        var userHasFriend = false;
+                                        // Checks if user is already friend with the user - if yes, then ignores
+                                        for friend in self.friendList{
+                                            if friend === user {
+                                                userHasFriend = true;
+                                                print("That was all of the users posts");
+                                            }
+                                        }
+                                        while !userCorrectChoiceMade && !userHasFriend{
+                                            print("That was the users posts");
+
+                                            if(userHasFriend == false){
+                                                print("Do you wish to become friends? Y/N");
+                                                // Failure here, it needs to check if friend is already in list... not anymore time left
+                                                if let userChoice = readLine(){
+                                                    switch userChoice.uppercased(){
+                                                    case "Y":
+                                                        myApp.userObj.AddToFriendList(user: user);
+                                                        print("User added to friend");
+                                                        userCorrectChoiceMade = true;
+                                                    case "N":
+                                                        print("Exiting to main menu");
+                                                        userCorrectChoiceMade = true;
+                                                    default:
+                                                        print("Selection not recognized");
+                                                    }
                                                 }
                                             }
                                         }
