@@ -917,10 +917,11 @@ class MainInitializer{
         while isQuit == false {
             if isLoggedIn == false {
                 print("""
-                    \n\n\n\tQ - Quit
+                    \n\n\n\tWELCOME TO THE DEATH STAR FRIEND SYSTEM\n\tQ - Quit
                     1 - Log på
                     2 - Opret konto
-                """);
+                    Make your choice:
+                """, terminator: " ");
         
                 var loginPage = "";
                 if let userChoice = readLine() {
